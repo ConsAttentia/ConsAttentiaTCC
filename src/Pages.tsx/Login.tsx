@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css";
-import ModalMensagem from "../Componentes.tsx/ModalMensagem";
+import ModalMensagem from "../componentes/ModalMensagem";
 import Gray from "../assets/Gray.png";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth } from "../firebase/firebase";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");

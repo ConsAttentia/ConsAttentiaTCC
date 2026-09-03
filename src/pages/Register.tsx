@@ -26,6 +26,7 @@ const Register: React.FC = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email.trim(), password);
+      localStorage.setItem("consattentia-user-name", name.trim());
       setModalMessage("Cadastro concluído ✅");
       setName("");
       setEmail("");

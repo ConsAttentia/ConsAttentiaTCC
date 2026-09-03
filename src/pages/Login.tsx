@@ -1,21 +1,20 @@
 import React, { useState } from "react";
-import styles from "./Login.module.css"; 
+import styles from "./Login.module.css";
 import ModalMensagem from "../componentes/ModalMensagem";
 import Gray from "../assets/Gray.png";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
-const Register: React.FC = () => {
-  const [name, setName] = useState("");
+const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [modalMessage, setModalMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    if (!name.trim() || !email.trim() || !password.trim()) {
-      setModalMessage("Preencha nome, email e senha.");
+    if (!email.trim() || !password.trim()) {
+      setModalMessage("Preencha o email e a senha.");
       return;
     }
 
@@ -25,50 +24,33 @@ const Register: React.FC = () => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email.trim(), password);
-      setModalMessage("Cadastro concluído ✅");
-      setName("");
-      setEmail("");
-      setPassword("");
-      setTimeout(() => navigate("/"), 1200);
+      await signInWithEmailAndPassword(auth, email.trim(), password);
+      navigate("/home");
     } catch (error: unknown) {
       const message =
         error instanceof Error
           ? error.message
-          : "Erro no cadastro!";
+          : "Erro no login!";
 
       setModalMessage(
-        message.includes("email-already-in-use")
-          ? "Este email já está cadastrado."
-          : message.includes("weak-password")
-            ? "A senha deve ter pelo menos 6 caracteres."
-            : message
+        message.includes("invalid-credential") || message.includes("user-not-found")
+          ? "Email ou senha inválidos."
+          : message
       );
     }
   };
 
   return (
-    
     <div className={styles.background}>
       <div className={styles.shapeTop}></div>
       <div className={styles.shapeBottom}></div>
-
-<div className={styles.logo}>
+ <div className={styles.logo}>
   <span className={styles.logoGreen}>Cons</span>
   <span className={styles.logoBlue}>Attentia</span>
 </div>
 
-
-
       <div className={styles.card}>
         <img src={Gray} alt="User Icon" className={styles.icon} />
-        <input
-          type="text"
-          placeholder="Nome"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={styles.input}
-        />
         <input
           type="email"
           placeholder="Email"
@@ -78,21 +60,22 @@ const Register: React.FC = () => {
         />
         <input
           type="password"
-          placeholder="Senha"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className={styles.input}
         />
         <button onClick={handleSubmit} className={styles.button}>
-          Cadastrar
+          Login
         </button>
       </div>
 
+ 
       <button
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/register")}
         className={styles.createAccount}
       >
-        Já tenho uma conta
+        Criar conta
       </button>
 
       {modalMessage && (
@@ -105,4 +88,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default Login;

@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "../../Pages.tsx/Register";
-import Login from "../../Pages.tsx/Login";
+import Register from "../../pages/Register";
+import Login from "../../pages/Login";
+import Home from "../../pages/Home";
 
 
 const AppRoutes: React.FC = () => {
@@ -10,6 +11,7 @@ const AppRoutes: React.FC = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./Login.module.css";
 import ModalMensagem from "../componentes/ModalMensagem";
 import Gray from "../assets/Gray.png";
+import FundoC from "../assets/fundoc.png";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase";
@@ -44,10 +45,9 @@ const Login: React.FC = () => {
     <div className={styles.background}>
       <div className={styles.shapeTop}></div>
       <div className={styles.shapeBottom}></div>
- <div className={styles.logo}>
-  <span className={styles.logoGreen}>Cons</span>
-  <span className={styles.logoBlue}>Attentia</span>
-</div>
+      <div className={styles.logo}>
+        <img src={FundoC} alt="ConsAttentia" />
+      </div>
 
       <div className={styles.card}>
         <img src={Gray} alt="User Icon" className={styles.icon} />

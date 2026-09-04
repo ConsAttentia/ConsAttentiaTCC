@@ -3,6 +3,9 @@ import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import personagem from "../assets/personagem.png";
 import fonte from "../assets/Fonte.png";
+import lucas from "../assets/lucasserio.jpg";
+import saymon from "../assets/eu.jpg";
+import giovani from "../assets/giovanni.jpg";
 
 const Home: React.FC = () => {
   const userName = localStorage.getItem("consattentia-user-name") || "usuário";
@@ -11,7 +14,7 @@ const Home: React.FC = () => {
   const [colorFilter, setColorFilter] = useState("none");
   const [wideLetters, setWideLetters] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
-  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isAboutExpanded, setIsAboutExpanded] = useState(false);
 
   const pageClassName = [
     styles.page,
@@ -28,9 +31,13 @@ const Home: React.FC = () => {
   return (
     <main className={pageClassName}>
       <header className={styles.header}>
-        <div className={styles.logo}>
+        <button
+          className={styles.logo}
+          aria-label="Voltar para a tela inicial"
+          onClick={() => navigate("/")}
+        >
           <img src={fonte} alt="ConsAttentia" />
-        </div>
+        </button>
         <div className={styles.headerRight}>
           <div className={styles.welcome}>
             <span>Bem-vindo,</span>
@@ -53,8 +60,8 @@ const Home: React.FC = () => {
           <p>
             O ConsAttentia é uma plataforma web desenvolvida com o objetivo principal de auxiliar pessoas que apresentam dificuldades relacionadas à atenção e à concentração, incluindo indivíduos com condições como o Transtorno do Déficit de Atenção e Hiperatividade (TDAH). A plataforma busca proporcionar aos usuários uma oportunidade de exercitar e desenvolver diferentes habilidades cognitivas por meio de atividades interativas e exercícios estruturados.
           </p>
-          <button className={styles.backButton} onClick={() => navigate("/")}>
-            Voltar para login
+          <button className={styles.backButton} onClick={() => navigate("/selecao")}>
+            Iniciar experimento
           </button>
         </div>
         <div className={styles.heroArt}>
@@ -100,6 +107,45 @@ const Home: React.FC = () => {
         A atenção é uma habilidade cognitiva que pode ser estimulada e aprimorada continuamente.
       </footer>
 
+      <section className={styles.aboutUs} aria-labelledby="about-title">
+        <div className={styles.aboutIntro}>
+          <span className={styles.aboutKicker}>Tudo</span>
+          <h2 id="about-title">Sobre nós</h2>
+          <p>
+            O site ConsAttentia é um projeto de TCC feito pelos alunos Giovani
+            Leon, Saymon Palermo e Lucas Ricardo, da escola Etec de Hortolândia,
+            do curso de Desenvolvimento de Sistemas Integrado ao Ensino Médio.
+          </p>
+          <button
+            className={styles.readMoreButton}
+            aria-expanded={isAboutExpanded}
+            onClick={() => setIsAboutExpanded(true)}
+          >
+            Ler mais
+          </button>
+        </div>
+        <div className={styles.teamGrid}>
+          <article className={styles.teamMember}>
+            <img src={lucas} alt="Foto de Lucas" />
+            <h3>Lucas</h3>
+            <span>Pesquisa e conteúdo</span>
+            <p>Responsável pela construção e evolução da plataforma.</p>
+          </article>
+          <article className={styles.teamMember}>
+            <img src={saymon} alt="Foto de Saymon" />
+            <h3>Saymon</h3>
+            <span>Desenvolvedor do sistema</span>
+            <p>Desenvolve atividades e conteúdos para a experiência.</p>
+          </article>
+          <article className={styles.teamMember}>
+            <img src={giovani} alt="Foto de Giovani" />
+            <h3>Giovani</h3>
+            <span>Design e acessibilidade</span>
+            <p>Cuida de uma experiência simples, acolhedora e acessível.</p>
+          </article>
+        </div>
+      </section>
+
       {isMenuOpen && (
         <>
           <button
@@ -144,21 +190,47 @@ const Home: React.FC = () => {
               </button>
             </section>
 
-            <section className={styles.aboutSection}>
-              <button className={styles.aboutButton} onClick={() => setIsAboutOpen(!isAboutOpen)}>
-                <span>Sobre nós</span>
-                <span>{isAboutOpen ? "−" : "+"}</span>
-              </button>
-              {isAboutOpen && (
-                <p>
-                  O ConsAttentia utiliza atividades interativas para estimular atenção, concentração e outras habilidades cognitivas de forma prática e acessível.
-                </p>
-              )}
-            </section>
-
             <button className={styles.logoutButton} onClick={handleLogout}>
               Sair e voltar para o login
             </button>
+          </aside>
+        </>
+      )}
+
+      {isAboutExpanded && (
+        <>
+          <button
+            className={styles.aboutOverlay}
+            aria-label="Fechar texto sobre nós"
+            onClick={() => setIsAboutExpanded(false)}
+          />
+          <aside className={styles.aboutModal} aria-labelledby="about-modal-title">
+            <div className={styles.aboutModalHeader}>
+              <h2 id="about-modal-title">Sobre nós</h2>
+              <button
+                className={styles.aboutCloseButton}
+                aria-label="Fechar texto sobre nós"
+                onClick={() => setIsAboutExpanded(false)}
+              >
+                ×
+              </button>
+            </div>
+            <p>
+              O site ConsAttentia é um projeto de TCC feito pelos alunos Giovani
+              Leon, Saymon Palermo e Lucas Ricardo, da escola Etec de Hortolândia,
+              do curso de Desenvolvimento de Sistemas Integrado ao Ensino Médio.
+              O trabalho foi supervisionado pelas professoras Priscila Batista e
+              Luzia Ivone. Priscila foi responsável pela matéria de preparação do
+              TCC e é profissional em informática voltada a banco de dados,
+              enquanto Luzia, psicóloga formada e especialista em neuropsicologia,
+              se responsabilizou por ajudar nosso time com pesquisas sobre a área
+              da psicologia, principalmente sobre atenção e outros assuntos
+              relacionados. O site foi feito utilizando React e TypeScript para o
+              desenvolvimento do backend (parte interna do site), CSS para o
+              frontend (design), Google Firebase para o desenvolvimento do banco
+              de dados, e Git e GitHub para o desenvolvimento e aplicação de novas
+              versões do site.
+            </p>
           </aside>
         </>
       )}

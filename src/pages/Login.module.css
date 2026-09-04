@@ -4,18 +4,29 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: #e6edf3;
+  box-sizing: border-box;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: clamp(78px, 12vh, 100px) 16px clamp(58px, 10vh, 82px);
+  background: #dce6ee url("../assets/fundo.png") center / cover no-repeat;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.background::before,
+.background::after {
+  display: none;
 }
 
 
 .shapeTop,
 .shapeBottom {
+  display: none;
   position: absolute;
-  width: 200px;
-  height: 200px;
-  background-color: #2e9b5f;
+  width: 150px;
+  height: 150px;
+  background-color: #32996f;
   clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
@@ -27,85 +38,133 @@
 .shapeBottom {
   bottom: 0;
   right: 0;
-  transform: rotate(180deg);
+  background-color: #32996f;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
 
 .card {
-  background: linear-gradient(135deg, #2e9b5f 0%, #2575fc 100%);
-  border-radius: 20px;
-  padding: 2.5rem;
-  width: 340px;
+  background: linear-gradient(135deg, #32996f 0%, #3f82b7 100%);
+  border-radius: 16px;
+  padding: clamp(20px, 4vw, 26px) clamp(22px, 7vw, 40px);
+  width: min(360px, 100%);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 22px rgba(39, 76, 94, 0.16);
+  flex-shrink: 0;
 }
 
 .icon {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 1rem;
+  width: min(64px, 25vw);
+  height: auto;
+  aspect-ratio: 1;
+  margin-bottom: 0.65rem;
   border-radius: 50%;        
   object-fit: cover;        
   background-color: white;  
-  padding: 8px;            
-  box-shadow: 0 0 8px rgba(0,0,0,0.2); 
+  padding: 7px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.14);
 }
 
 
 .input {
   width: 100%;
-  padding: 0.8rem;
-  margin: 0.5rem 0;
+  min-height: 34px;
+  padding: 0.48rem 0.65rem;
+  margin: 0.3rem 0;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 0.82rem;
+  color: #33505b;
+  outline: none;
+}
+
+.input:focus {
+  box-shadow: 0 0 0 2px rgba(246, 220, 119, 0.9);
 }
 
 .button {
-  background-color: rgb(236, 234, 234);
-  color: #3a3a3a;
+  background-color: #e8e8e8;
+  color: #3b9091;
   border: none;
-  width:fit-content;
-  border-radius: 4px;
-  padding: 1.0rem 1.5rem;
+  min-width: 74px;
+  min-height: 34px;
+  border-radius: 5px;
+  padding: 0.38rem 0.5rem;
+  font-size: 0.78rem;
   font-weight: bold;
-  margin-top: 1rem;
+  margin-top: 0.65rem;
   cursor: pointer;
-  transition: 0.3s;
-  
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .button:hover {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .createAccount {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  left: 50%;
+  max-width: calc(100% - 32px);
+  transform: translateX(-50%);
   color: white;
-  background: linear-gradient(135deg, #2e9b5f 0%, #2575fc 100%);
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
+  background: transparent;
+  padding: 0.25rem 0.6rem;
+  border: none;
+  border-radius: 5px;
   text-decoration: none;
-  font-weight: 500;
-  border-color:#f0f0f0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: normal;
+  transition: background-color 0.2s;
 }
+
+.createAccount:hover {
+  background-color: rgba(49, 95, 145, 0.75);
+}
+
 .logo {
   position: absolute;
-  top: 40px;
+  top: max(15px, env(safe-area-inset-top));
   width: 100%;
-  text-align: center;
-  font-family: "Carlito", sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 1;
 }
 
-.logoGreen {
-  color: #005a9f; 
+.logo img {
+  width: min(86vw, 320px);
+  height: auto;
+  display: block;
 }
 
-.logoBlue {
-  color: #00874c; 
+@media (max-width: 520px) {
+  .background {
+    padding: 72px 12px 54px;
+  }
+
+  .logo img {
+    width: min(90vw, 320px);
+  }
+
+  .card {
+    border-radius: 12px;
+  }
+}
+
+@media (max-height: 560px) {
+  .background {
+    align-items: flex-start;
+  }
+
+  .logo {
+    top: 12px;
+  }
 }

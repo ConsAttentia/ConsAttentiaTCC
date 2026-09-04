@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./Login.module.css"; 
 import ModalMensagem from "../componentes/ModalMensagem";
 import Gray from "../assets/Gray.png";
+import FundoC from "../assets/fundoc.png";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase";
@@ -15,7 +16,7 @@ const Register: React.FC = () => {
 
   const handleSubmit = async () => {
     if (!name.trim() || !email.trim() || !password.trim()) {
-      setModalMessage("Preencha nome, email e senha.");
+      setModalMessage("Preencha username, email e senha.");
       return;
     }
 
@@ -54,10 +55,9 @@ const Register: React.FC = () => {
       <div className={styles.shapeTop}></div>
       <div className={styles.shapeBottom}></div>
 
-<div className={styles.logo}>
-  <span className={styles.logoGreen}>Cons</span>
-  <span className={styles.logoBlue}>Attentia</span>
-</div>
+      <div className={styles.logo}>
+        <img src={FundoC} alt="ConsAttentia" />
+      </div>
 
 
 
@@ -65,7 +65,7 @@ const Register: React.FC = () => {
         <img src={Gray} alt="User Icon" className={styles.icon} />
         <input
           type="text"
-          placeholder="Nome"
+          placeholder="Username"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className={styles.input}

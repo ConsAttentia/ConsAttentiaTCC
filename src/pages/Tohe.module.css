@@ -1,0 +1,324 @@
+.page {
+  min-height: 100vh;
+  min-height: 100svh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 64px) 86px;
+  color: #d9e2e5;
+  background: linear-gradient(115deg, #1b3c35 0%, #172d36 100%);
+}
+
+.gameArea {
+  width: min(100%, 900px);
+  padding-bottom: 88px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 4vw, 28px);
+  width: min(100%, 760px);
+}
+
+.card {
+  min-height: clamp(150px, 20vw, 220px);
+  border: 0;
+  border-radius: 3px;
+  color: #a6a6a6;
+  background: #eeeeee;
+  font: 400 clamp(2rem, 5vw, 3rem)/1 Arial, sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: #f7f7f7;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+}
+
+.cardFilled {
+  padding: 0;
+  overflow: hidden;
+}
+
+.cardFilled img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #e7e7e7;
+  pointer-events: none;
+}
+
+.pieces {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(70px, 1fr));
+  gap: clamp(10px, 2vw, 18px);
+  width: min(100%, 760px);
+  margin-top: clamp(18px, 3vw, 26px);
+}
+
+.resetButton {
+  position: absolute;
+  bottom: clamp(22px, 5vw, 38px);
+  right: clamp(20px, 4vw, 42px);
+  width: 42px;
+  height: 42px;
+  padding: 0 0 4px;
+  border: 0;
+  color: #dce5e7;
+  background: transparent;
+  font: 400 2rem/1 Arial, sans-serif;
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  background: transparent;
+}
+
+.resetButton:focus-visible {
+  outline: 3px solid #dce5e7;
+  outline-offset: 4px;
+}
+
+.piece {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 3px solid transparent;
+  border-radius: 5px;
+  object-fit: contain;
+  background: #e7e7e7;
+  cursor: grab;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
+}
+
+.piece:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: #dce5e7;
+  filter: brightness(1.08);
+}
+
+.piece:active {
+  cursor: grabbing;
+  transform: scale(0.97);
+}
+
+.card:focus-visible {
+  outline: 3px solid #d9e2e5;
+  outline-offset: 4px;
+}
+
+.instructions {
+  width: min(100%, 600px);
+  margin: clamp(22px, 4vw, 32px) 0 0;
+  color: #dce5e7;
+  font-size: clamp(0.92rem, 2vw, 1.1rem);
+  line-height: 1.45;
+  text-align: center;
+}
+
+.finishMessage {
+  width: min(100%, 600px);
+  margin: 12px 0 0;
+  color: #f3c9a8;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.finishButton,
+.successButton {
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 8px;
+  color: #ffffff;
+  background: linear-gradient(110deg, #279466, #3f87bd);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.finishButton {
+  margin-top: 18px;
+}
+
+.finishButton:hover,
+.successButton:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.finishButton:focus-visible,
+.successButton:focus-visible {
+  outline: 3px solid #dce5e7;
+  outline-offset: 4px;
+}
+
+.successScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: rgba(18, 39, 45, 0.94);
+}
+
+.successCard {
+  width: min(100%, 560px);
+  padding: clamp(30px, 7vw, 58px);
+  box-sizing: border-box;
+  border: 1px solid rgba(220, 229, 231, 0.35);
+  border-radius: 14px;
+  color: #dce5e7;
+  background: linear-gradient(135deg, #1b4f43, #1e4658);
+  text-align: center;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  animation: successIn 0.35s ease-out;
+}
+
+.successKicker {
+  color: #a9d9bd;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.successCard h1 {
+  margin: 14px 0 8px;
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.successCard p {
+  margin: 0;
+  font-size: clamp(1.2rem, 3vw, 1.55rem);
+}
+
+.successButton {
+  margin-top: 26px;
+}
+
+@keyframes successIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.brand {
+  position: absolute;
+  left: clamp(20px, 4vw, 42px);
+  bottom: clamp(22px, 5vw, 38px);
+  width: clamp(170px, 24vw, 250px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.brand img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) brightness(1.65);
+}
+
+.nextButton {
+  position: absolute;
+  bottom: clamp(24px, 5vw, 36px);
+  left: 50%;
+  width: 66px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform: translateX(-50%);
+}
+
+.nextButton span {
+  position: absolute;
+  top: 22px;
+  width: 38px;
+  height: 7px;
+  border-radius: 4px;
+  background: #dce5e7;
+}
+
+.nextButton span:first-child {
+  left: 3px;
+  transform: rotate(-45deg);
+  transform-origin: right center;
+}
+
+.nextButton span:last-child {
+  right: 3px;
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+.nextButton:hover {
+  filter: brightness(1.15);
+}
+
+.nextButton:focus-visible {
+  outline: 3px solid #dce5e7;
+  outline-offset: 5px;
+}
+
+@media (max-width: 560px) {
+  .page {
+    padding: 24px 16px 88px;
+  }
+
+  .cards {
+    gap: 12px;
+  }
+
+  .card {
+    min-height: 142px;
+  }
+
+  .pieces {
+    gap: 8px;
+  }
+
+  .brand {
+    width: 160px;
+  }
+
+  .resetButton {
+    right: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .card {
+    min-height: 118px;
+  }
+
+  .pieces {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(100%, 260px);
+  }
+}

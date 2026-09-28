@@ -1,32 +1,46 @@
-# React + TypeScript + Vite
+# ConsAttentia
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Projeto de Trabalho de Conclusao de Curso desenvolvido pela turma 3DSB para apoiar atividades de atencao, foco e organizacao de historias.
 
-Currently, two official plugins are available:
+## Integrantes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Saymon Palermo Martins
+- Lucas Ricardo Nascimento
+- Giovanni Leon de Melo
+- Turma: 3DSB
 
-## React Compiler
+## Sobre o projeto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O ConsAttentia e uma aplicacao web com atividades interativas de avaliacao e exercicio da atencao.
 
-## Expanding the Oxlint configuration
+- **TOHE:** organiza imagens em sequencias coerentes nos niveis facil e medio.
+- **AATS:** reproduz listas de palavras em audio e registra respostas para criterios de atencao sustentada.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+A aplicacao apresenta resultados, tentativas e tempo total, alem de gerar relatorios em PDF.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Tecnologias e funcionalidades
+
+- React 19, TypeScript, Vite, React Router e CSS Modules.
+- Firebase Authentication e Analytics.
+- Login, cadastro, logout e gerenciamento de perfil.
+- Drag and drop, controle por teclado, cronometro, pontuacao e resultados.
+- jsPDF e Web Share API para relatorios, com fallback para download.
+- Recursos de acessibilidade e suporte a Libras.
+
+## Como executar
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Validacao do projeto:
+
+```bash
+npm run lint
+npm run build
+```
+
+Configure as variaveis `VITE_FIREBASE_*` em um arquivo `.env` na raiz. Esse arquivo nao deve ser versionado.
+
+Repositorio: [ConsAttentiaTCC no GitHub](https://github.com/ConsAttentia/ConsAttentiaTCC)

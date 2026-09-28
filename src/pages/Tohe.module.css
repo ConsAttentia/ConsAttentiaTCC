@@ -13,6 +13,13 @@
   background: linear-gradient(115deg, #1b3c35 0%, #172d36 100%);
 }
 
+.accountMenuAnchor {
+  position: absolute;
+  top: 20px;
+  right: clamp(18px, 4vw, 40px);
+  z-index: 8;
+}
+
 .gameArea {
   width: min(100%, 900px);
   padding-bottom: 88px;

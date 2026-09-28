@@ -6,30 +6,16 @@ import fonte from "../assets/Fonte.png";
 import lucas from "../assets/lucasserio.jpg";
 import saymon from "../assets/eu.jpg";
 import giovani from "../assets/giovanni.jpg";
+import MenuConta from "../componentes/MenuConta";
+import { auth } from "../firebase/firebase";
 
 const Home: React.FC = () => {
-  const userName = localStorage.getItem("consattentia-user-name") || "usuário";
+  const userName = auth?.currentUser?.displayName || localStorage.getItem("consattentia-user-name") || "usuário";
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [colorFilter, setColorFilter] = useState("none");
-  const [wideLetters, setWideLetters] = useState(false);
-  const [highContrast, setHighContrast] = useState(false);
   const [isAboutExpanded, setIsAboutExpanded] = useState(false);
 
-  const pageClassName = [
-    styles.page,
-    colorFilter !== "none" ? styles[colorFilter] : "",
-    wideLetters ? styles.wideLetters : "",
-    highContrast ? styles.highContrast : "",
-  ].filter(Boolean).join(" ");
-
-  const handleLogout = () => {
-    localStorage.removeItem("consattentia-user-name");
-    navigate("/");
-  };
-
   return (
-    <main className={pageClassName}>
+    <main className={styles.page}>
       <header className={styles.header}>
         <button
           className={styles.logo}
@@ -43,14 +29,7 @@ const Home: React.FC = () => {
             <span>Bem-vindo,</span>
             <strong>{userName}</strong>
           </div>
-          <button
-            className={styles.menuButton}
-            aria-label="Abrir configurações"
-            aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen(true)}
-          >
-            <span></span><span></span><span></span>
-          </button>
+          <MenuConta />
         </div>
       </header>
 
@@ -101,6 +80,17 @@ const Home: React.FC = () => {
             O aprimoramento da atenção pode aumentar a produtividade, melhorar a execução das tarefas e favorecer a retenção e organização das informações. Práticas consistentes também ajudam a reduzir distração, esquecimento e desorganização.
           </p>
         </article>
+        <article className={styles.card}>
+          <div className={styles.cardTop}>
+            <div className={styles.cardIcon}>04</div>
+            <span className={styles.cardTag}>Atenção</span>
+          </div>
+          <h2>Treine a atenção sustentada</h2>
+          <p>
+            No AATS, você acompanha sequências de palavras em áudio e responde a critérios específicos em cada etapa. Um exercício para praticar foco contínuo, escuta atenta e tomada de decisão.
+          </p>
+
+        </article>
       </section>
 
       <footer className={styles.footer}>
@@ -146,57 +136,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {isMenuOpen && (
-        <>
-          <button
-            className={styles.drawerOverlay}
-            aria-label="Fechar configurações"
-            onClick={() => setIsMenuOpen(false)}
-          />
-          <aside className={styles.drawer} aria-label="Configurações de acessibilidade">
-            <div className={styles.drawerHeader}>
-              <div>
-                <span className={styles.drawerKicker}>Personalize sua experiência</span>
-                <h2>Configurações</h2>
-              </div>
-              <button
-                className={styles.closeButton}
-                aria-label="Fechar configurações"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                ×
-              </button>
-            </div>
-
-            <section className={styles.settingsSection}>
-              <h3>Acessibilidade</h3>
-              <div className={styles.settingGroup}>
-                <span className={styles.settingLabel}>Filtros para daltonismo</span>
-                <button className={colorFilter === "protanopia" ? styles.settingActive : styles.settingButton} onClick={() => setColorFilter(colorFilter === "protanopia" ? "none" : "protanopia")}>
-                  Protanopia
-                </button>
-                <button className={colorFilter === "deuteranopia" ? styles.settingActive : styles.settingButton} onClick={() => setColorFilter(colorFilter === "deuteranopia" ? "none" : "deuteranopia")}>
-                  Deuteranopia
-                </button>
-                <button className={colorFilter === "tritanopia" ? styles.settingActive : styles.settingButton} onClick={() => setColorFilter(colorFilter === "tritanopia" ? "none" : "tritanopia")}>
-                  Tritanopia
-                </button>
-              </div>
-              <button className={wideLetters ? styles.settingActive : styles.settingButton} onClick={() => setWideLetters(!wideLetters)}>
-                Espaçamento entre letras
-              </button>
-              <button className={highContrast ? styles.settingActive : styles.settingButton} onClick={() => setHighContrast(!highContrast)}>
-                Alto contraste
-              </button>
-            </section>
-
-            <button className={styles.logoutButton} onClick={handleLogout}>
-              Sair e voltar para o login
-            </button>
-          </aside>
-        </>
-      )}
-
       {isAboutExpanded && (
         <>
           <button
@@ -216,20 +155,14 @@ const Home: React.FC = () => {
               </button>
             </div>
             <p>
-              O site ConsAttentia é um projeto de TCC feito pelos alunos Giovani
-              Leon, Saymon Palermo e Lucas Ricardo, da escola Etec de Hortolândia,
-              do curso de Desenvolvimento de Sistemas Integrado ao Ensino Médio.
-              O trabalho foi supervisionado pelas professoras Priscila Batista e
-              Luzia Ivone. Priscila foi responsável pela matéria de preparação do
-              TCC e é profissional em informática voltada a banco de dados,
-              enquanto Luzia, psicóloga formada e especialista em neuropsicologia,
-              se responsabilizou por ajudar nosso time com pesquisas sobre a área
-              da psicologia, principalmente sobre atenção e outros assuntos
-              relacionados. O site foi feito utilizando React e TypeScript para o
-              desenvolvimento do backend (parte interna do site), CSS para o
-              frontend (design), Google Firebase para o desenvolvimento do banco
-              de dados, e Git e GitHub para o desenvolvimento e aplicação de novas
-              versões do site.
+              O site ConsAttentia é um projeto web de TCC feito para pessoas
+               que possuem problemas com atenção como TDAH, algo que pode gerar
+                dificuldades desnecessárias no dia a dia. O site tem como objetivo ajudar esse 
+                público oferecendo atividades  que treinam e aperfeiçoam suas habilidades focadas e atenção, atividades essas que foram feitas baseando-se em conhecimentos e testes psicológicos. Seu progresso ao realizar as atividades pode ser registrado para ser apresentado a um profissional psicológico, se for da sua vontade. Além disso, o site possui um pequeno sistema de acessibilidade para abranger ainda mais pessoas que buscam esse tipo de auxilio. 
+ O projeto foi desenvolvido por alunos Giovani Leon, Saymon
+  Palermo e Lucas Ricardo da escola Etec de Hortolândia do curso de
+   Desenvolvimento de Sistemas Integrado ao Ensino Médio. O trabalho foi supervisionado pela professora Priscila Batista e Luzia Ivone, a Priscila foi responsável pela matéria de preparação do TCC e profissional em informática voltada a banco de dados, enquanto Luzia, uma psicóloga formada e especialista em neuropsicologia, se responsabilizou em ajudar nosso time com pesquisas sobre a area da psicologia, principalmente sobre atenção e outros assunto relacionados. O site foi feito utilizando react e typescript para o desenvolvimento do backend (parte interna do site), css para frontend (desing), google firebase para o desenvolvimento do banco de dados,
+  git e github para o desenvolvimento e aplicação de versões novas do site.
             </p>
           </aside>
         </>

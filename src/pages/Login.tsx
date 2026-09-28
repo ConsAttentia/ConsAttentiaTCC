@@ -25,7 +25,10 @@ const Login: React.FC = () => {
     }
 
     try {
-      await signInWithEmailAndPassword(auth, email.trim(), password);
+      const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
+      if (credential.user.displayName) {
+        localStorage.setItem("consattentia-user-name", credential.user.displayName);
+      }
       navigate("/home");
     } catch (error: unknown) {
       const message =

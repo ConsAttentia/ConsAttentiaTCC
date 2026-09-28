@@ -5,3 +5,28 @@ html, body, #root {
   padding: 0;
   font-family: "Carlito", sans-serif;
 }
+
+.accessibilityRoot {
+  min-height: 100%;
+}
+
+.accessibilityRoot {
+  --accessibility-color-filter: brightness(1);
+  --accessibility-contrast-filter: brightness(1);
+  filter: var(--accessibility-color-filter) var(--accessibility-contrast-filter);
+}
+.accessibility-protanopia { --accessibility-color-filter: saturate(0.72) hue-rotate(-18deg); }
+.accessibility-deuteranopia { --accessibility-color-filter: saturate(0.7) hue-rotate(25deg); }
+.accessibility-tritanopia { --accessibility-color-filter: saturate(0.75) hue-rotate(180deg); }
+.accessibility-wide-letters { letter-spacing: 0.06em; }
+.accessibility-high-contrast { --accessibility-contrast-filter: contrast(1.3); }
+.accessibility-dyslexia-friendly,
+.accessibility-dyslexia-friendly * { font-family: Verdana, sans-serif !important; }
+.accessibility-reduced-motion *,
+.accessibility-reduced-motion *::before,
+.accessibility-reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
+}

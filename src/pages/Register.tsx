@@ -4,7 +4,7 @@ import ModalMensagem from "../componentes/ModalMensagem";
 import Gray from "../assets/Gray.png";
 import FundoC from "../assets/fundoc.png";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
 const Register: React.FC = () => {
@@ -26,7 +26,8 @@ const Register: React.FC = () => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email.trim(), password);
+      const credential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+      await updateProfile(credential.user, { displayName: name.trim() });
       localStorage.setItem("consattentia-user-name", name.trim());
       setModalMessage("Cadastro concluído ✅");
       setName("");

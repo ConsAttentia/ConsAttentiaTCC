@@ -90,17 +90,10 @@
   background: linear-gradient(135deg, #3788b5, #269467);
   font: 100 5.8rem/1 Arial, sans-serif;
   cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
 }
 
 .arrow:hover:not(:disabled) {
-  transform: scale(1.04);
   filter: brightness(1.08);
-  box-shadow: 0 8px 18px rgba(37, 91, 91, 0.18);
-}
-
-.arrow:active:not(:disabled) {
-  transform: scale(0.98);
 }
 
 .arrow:focus-visible {
@@ -128,11 +121,9 @@
   border-radius: 10px;
   background: transparent;
   cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .imageFrameButton:hover:not(:disabled) {
-  transform: translateY(-3px) scale(1.01);
   filter: brightness(1.04);
 }
 
@@ -154,74 +145,9 @@
 }
 
 .fitaImage {
-  object-fit: cover;
-}
-
-.slideIn,
-.slideOut {
-  animation-duration: 0.5s;
-  animation-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-  animation-fill-mode: both;
-  will-change: transform;
-}
-
-.slideInFromRight {
-  animation-name: slideInFromRight;
-}
-
-.slideInFromLeft {
-  animation-name: slideInFromLeft;
-}
-
-.slideOutToLeft {
-  animation-name: slideOutToLeft;
-}
-
-.slideOutToRight {
-  animation-name: slideOutToRight;
-}
-
-@keyframes slideInFromRight {
-  from {
-    transform: translate3d(100%, 0, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes slideInFromLeft {
-  from {
-    transform: translate3d(-100%, 0, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes slideOutToLeft {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-@keyframes slideOutToRight {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(100%, 0, 0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .slideIn,
-  .slideOut {
-    animation: none;
-  }
+  object-fit: contain;
+  padding: 12px;
+  box-sizing: border-box;
 }
 
 .experiment p {

@@ -61,7 +61,7 @@ export default function Configuracoes() {
               <input type="checkbox" checked={preferences.vlibras} onChange={(event) => updatePreferences({ vlibras: event.target.checked })} />
               Ativar tradutor para Libras
             </label>
-            <p className={styles.vlibrasNote}>O widget oficial do VLibras é carregado quando ativado e requer conexão com a internet.</p>
+            <p className={styles.vlibrasNote}>O VLibras vem ativado por padrão e requer conexão com a internet. Você pode desativá-lo a qualquer momento.</p>
             <button className={styles.button} type="button" onClick={resetPreferences}>Restaurar padrões</button>
           </section>
         </div>

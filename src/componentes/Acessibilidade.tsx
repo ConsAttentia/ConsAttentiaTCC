@@ -11,7 +11,7 @@ const defaults: AccessibilityPreferences = {
   highContrast: false,
   dyslexiaFriendly: false,
   reducedMotion: false,
-  vlibras: false,
+  vlibras: true,
 };
 
 function loadPreferences(): AccessibilityPreferences {
@@ -32,6 +32,13 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
       document.documentElement.style.removeProperty("font-size");
     };
   }, [preferences.textScale]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("accessibility-reduced-motion", preferences.reducedMotion);
+    return () => {
+      document.documentElement.classList.remove("accessibility-reduced-motion");
+    };
+  }, [preferences.reducedMotion]);
 
   const value = useMemo<AccessibilityContextValue>(() => ({
     preferences,

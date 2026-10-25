@@ -3,6 +3,7 @@ import styles from "./Selecao.module.css";
 import pose from "../assets/pose.png";
 import fita from "../assets/fita.png";
 import fundoc from "../assets/fundoc.png";
+import principalTwo from "../assets/principal2.jpg";
 import { useNavigate } from "react-router-dom";
 import MenuConta from "../componentes/MenuConta";
 
@@ -22,6 +23,14 @@ const experiments = [
     alt: "Fita de sinalização representando uma atividade de foco",
     description:
       "Atividade de Atenção Sustentada: acompanhe palavras em áudio e responda aos critérios de cada etapa para exercitar o foco contínuo.",
+  },
+  {
+    title: "ADAS",
+    image: principalTwo,
+    route: "/adaa",
+    alt: "Paisagem usada como imagem de referência para o teste de atenção alternada",
+    description:
+      " Atividade de Atenção Seletiva é uma atividade que consiste em observar recortes de uma imagem principal e indicar a qual recorte se encaixa nessa imagem principal. Essa atividade vai treinar sua capacidade de selecionar apenas uma parte dos seus estímulos disponíveis.",
   },
 ];
 
@@ -64,7 +73,7 @@ const Selecao: React.FC = () => {
           >
             <div className={styles.imageFrame}>
               <img
-                className={`${styles.carouselImage} ${activeSlide === 1 ? styles.fitaImage : ""}`}
+                className={`${styles.carouselImage} ${experiment.title === "AATS" ? styles.fitaImage : ""}`}
                 src={experiment.image}
                 alt={experiment.alt}
               />

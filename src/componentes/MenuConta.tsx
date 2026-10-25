@@ -18,7 +18,7 @@ export default function MenuConta() {
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [isOpen]);
-
+//ME MATA DE UMA VEZ 
   const navigateTo = (path: string) => {
     setIsOpen(false);
     navigate(path);

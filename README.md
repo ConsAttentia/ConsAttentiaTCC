@@ -1,46 +1,75 @@
-# ConsAttentia
+# React + TypeScript + Vite
 
-Projeto de Trabalho de Conclusao de Curso desenvolvido pela turma 3DSB para apoiar atividades de atencao, foco e organizacao de historias.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Integrantes
+Currently, two official plugins are available:
 
-- Saymon Palermo Martins
-- Lucas Ricardo Nascimento
-- Giovanni Leon de Melo
-- Turma: 3DSB
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Sobre o projeto
+## React Compiler
 
-O ConsAttentia e uma aplicacao web com atividades interativas de avaliacao e exercicio da atencao.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-- **TOHE:** organiza imagens em sequencias coerentes nos niveis facil e medio.
-- **AATS:** reproduz listas de palavras em audio e registra respostas para criterios de atencao sustentada.
+## Expanding the ESLint configuration
 
-A aplicacao apresenta resultados, tentativas e tempo total, alem de gerar relatorios em PDF.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Tecnologias e funcionalidades
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-- React 19, TypeScript, Vite, React Router e CSS Modules.
-- Firebase Authentication e Analytics.
-- Login, cadastro, logout e gerenciamento de perfil.
-- Drag and drop, controle por teclado, cronometro, pontuacao e resultados.
-- jsPDF e Web Share API para relatorios, com fallback para download.
-- Recursos de acessibilidade e suporte a Libras.
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## Como executar
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 
-```bash
-npm install
-npm run dev
 ```
 
-Validacao do projeto:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```bash
-npm run lint
-npm run build
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
 ```
-
-Configure as variaveis `VITE_FIREBASE_*` em um arquivo `.env` na raiz. Esse arquivo nao deve ser versionado.
-
-Repositorio: [ConsAttentiaTCC no GitHub](https://github.com/ConsAttentia/ConsAttentiaTCC)

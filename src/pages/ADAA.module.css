@@ -1,0 +1,232 @@
+.page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  color: #e8f0ec;
+  background: linear-gradient(125deg, #183a34 0%, #1d3640 100%);
+}
+
+.header {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(18px, 5vw, 58px);
+}
+
+.brand {
+  width: clamp(142px, 22vw, 205px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.brand img { display: block; width: 100%; height: auto; filter: grayscale(1) brightness(2); }
+
+.content {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 28px 18px 48px;
+}
+
+.panel {
+  width: min(100%, 760px);
+  padding: clamp(24px, 5vw, 48px);
+  box-sizing: border-box;
+  border: 1px solid rgba(211, 231, 221, 0.28);
+  border-radius: 10px;
+  background: rgba(248, 251, 249, 0.97);
+  color: #193e34;
+  box-shadow: 0 24px 60px rgba(4, 20, 25, 0.28);
+}
+
+.gamePanel { width: min(100%, 1120px); }
+
+.kicker {
+  color: #217a56;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.panel h1 {
+  margin: 8px 0 12px;
+  color: #183c33;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  line-height: 1.12;
+}
+
+.lead {
+  max-width: 700px;
+  margin: 0;
+  color: #536a61;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.levelSummary {
+  display: grid;
+  gap: 8px;
+  margin: 24px 0;
+  padding-left: 22px;
+  color: #2b5544;
+  font-size: 0.94rem;
+}
+
+.primaryButton,
+.secondaryButton,
+.shareButton {
+  min-height: 46px;
+  padding: 11px 20px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.primaryButton { background: #19784f; }
+.primaryButton:hover { background: #125b3b; }
+.secondaryButton { color: #194a39; border-color: #b9d3c5; background: #edf6f0; }
+.secondaryButton:hover { background: #deeee3; }
+.shareButton { background: #b42318; }
+.shareButton:hover { background: #8d1c14; }
+.shareButton:disabled { opacity: 0.65; cursor: wait; }
+
+.game {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(180px, 0.8fr);
+  align-items: center;
+  gap: clamp(18px, 4vw, 36px);
+  margin-top: 26px;
+}
+
+.gridFrame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #dbe4df;
+}
+
+.gridImage {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.gridButtons {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+}
+
+.gridCell {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: crosshair;
+}
+
+.gridCell:hover { border-color: rgba(255, 255, 255, 0.9); background: rgba(25, 120, 79, 0.22); }
+.gridCell:focus-visible { outline: 3px solid #f6cb51; outline-offset: -4px; }
+
+.cropList {
+  display: grid;
+  gap: 12px;
+}
+
+.cropCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 84px;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border: 2px solid #dce8df;
+  border-radius: 7px;
+  color: #526b60;
+  background: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.cropImage {
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: 500% 500%;
+}
+
+.activeCrop {
+  border-color: #19784f;
+  box-shadow: 0 0 0 2px rgba(25, 120, 79, 0.13);
+}
+
+.answeredCrop { color: #87958d; background: #f0f4f1; }
+
+.progress {
+  margin: 18px 0 0;
+  color: #256143;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.actions,
+.resultActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.actions { justify-content: center; }
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 26px 0 8px;
+}
+
+.results > div {
+  padding: 14px;
+  border-left: 3px solid #2b9569;
+  background: #f0f6f2;
+}
+
+.results dt { color: #62766d; font-size: 0.8rem; }
+.results dd { margin: 5px 0 0; color: #173e32; font-size: 1.1rem; font-weight: 800; }
+.results dd span { color: #64796f; font-size: 0.82rem; font-weight: 500; }
+
+.feedback {
+  min-height: 24px;
+  color: #246044;
+  font-weight: 700;
+}
+
+.footer {
+  padding: 18px;
+  color: #b8ccc2;
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+@media (max-width: 680px) {
+  .header { height: 66px; }
+  .content { padding: 18px 12px 28px; }
+  .game { grid-template-columns: 1fr; }
+  .cropList { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+  .cropCard { grid-template-columns: 1fr; gap: 5px; padding: 5px; font-size: 0.72rem; text-align: center; }
+  .results { grid-template-columns: 1fr; }
+  .resultActions > button { flex: 1 1 100%; }
+}

@@ -33,7 +33,7 @@ const Register: React.FC = () => {
       setName("");
       setEmail("");
       setPassword("");
-      setTimeout(() => navigate("/"), 1200);
+      setTimeout(() => navigate("/login"), 1200);
     } catch (error: unknown) {
       const message =
         error instanceof Error
@@ -91,7 +91,7 @@ const Register: React.FC = () => {
       </div>
 
       <button
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/login")}
         className={styles.createAccount}
       >
         Já tenho uma conta

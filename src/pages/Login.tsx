@@ -29,6 +29,7 @@ const Login: React.FC = () => {
       if (credential.user.displayName) {
         localStorage.setItem("consattentia-user-name", credential.user.displayName);
       }
+      localStorage.setItem("consattentia-welcome-completed", "true");
       navigate("/home");
     } catch (error: unknown) {
       const message =

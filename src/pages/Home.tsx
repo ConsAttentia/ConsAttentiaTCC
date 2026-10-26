@@ -19,8 +19,8 @@ const Home: React.FC = () => {
       <header className={styles.header}>
         <button
           className={styles.logo}
-          aria-label="Voltar para a tela inicial"
-          onClick={() => navigate("/")}
+          aria-label="Ir para a home"
+          onClick={() => navigate("/home")}
         >
           <img src={fonte} alt="ConsAttentia" />
         </button>

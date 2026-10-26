@@ -8,6 +8,8 @@ const defaults: AccessibilityPreferences = {
   colorFilter: "none",
   textScale: 100,
   wideLetters: false,
+  wideLines: false,
+  underlinedLinks: false,
   highContrast: false,
   dyslexiaFriendly: false,
   reducedMotion: false,
@@ -59,6 +61,8 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
     "accessibilityRoot",
     preferences.colorFilter !== "none" ? `accessibility-${preferences.colorFilter}` : "",
     preferences.wideLetters ? "accessibility-wide-letters" : "",
+    preferences.wideLines ? "accessibility-wide-lines" : "",
+    preferences.underlinedLinks ? "accessibility-underlined-links" : "",
     preferences.highContrast ? "accessibility-high-contrast" : "",
     preferences.dyslexiaFriendly ? "accessibility-dyslexia-friendly" : "",
     preferences.reducedMotion ? "accessibility-reduced-motion" : "",
@@ -66,9 +70,7 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
 
   return (
     <AccessibilityContext.Provider value={value}>
-      <div className={accessibilityClasses}>
-        {children}
-      </div>
+      <div className={accessibilityClasses}>{children}</div>
     </AccessibilityContext.Provider>
   );
 }

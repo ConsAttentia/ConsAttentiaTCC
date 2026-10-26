@@ -18,7 +18,14 @@ html, body, #root {
 .accessibility-protanopia { --accessibility-color-filter: saturate(0.72) hue-rotate(-18deg); }
 .accessibility-deuteranopia { --accessibility-color-filter: saturate(0.7) hue-rotate(25deg); }
 .accessibility-tritanopia { --accessibility-color-filter: saturate(0.75) hue-rotate(180deg); }
+.accessibility-monochromacy { --accessibility-color-filter: grayscale(1); }
+.accessibility-widget {
+  filter: var(--accessibility-color-filter, brightness(1)) var(--accessibility-contrast-filter, brightness(1));
+}
 .accessibility-wide-letters { letter-spacing: 0.06em; }
+.accessibility-wide-lines,
+.accessibility-wide-lines * { line-height: 1.8 !important; }
+.accessibility-underlined-links a { text-decoration: underline !important; text-underline-offset: 0.15em; }
 .accessibility-high-contrast { --accessibility-contrast-filter: contrast(1.3); }
 .accessibility-dyslexia-friendly,
 .accessibility-dyslexia-friendly * { font-family: Verdana, sans-serif !important; }

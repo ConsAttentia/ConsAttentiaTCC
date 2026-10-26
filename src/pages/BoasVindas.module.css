@@ -1,0 +1,278 @@
+.page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px clamp(20px, 6vw, 80px) 36px;
+  color: #183d35;
+  background:
+    radial-gradient(ellipse at 8% 14%, rgba(81, 169, 123, 0.2), transparent 34%),
+    radial-gradient(ellipse at 94% 82%, rgba(86, 145, 183, 0.18), transparent 32%),
+    linear-gradient(145deg, #f3f7f4 0%, #e8f0ec 55%, #e7eef2 100%);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.ambient {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.62) 0 2px, transparent 3px),
+    radial-gradient(circle at 16% 78%, rgba(255, 255, 255, 0.48) 0 3px, transparent 4px);
+}
+
+.header,
+.intro,
+.accessibility,
+.actions {
+  width: min(100%, 900px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  display: block;
+  width: clamp(170px, 23vw, 250px);
+  height: auto;
+}
+
+.headerNote {
+  color: #58736a;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.intro {
+  margin: clamp(28px, 5vh, 50px) 0 24px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #247b58;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  margin: 0;
+  color: #183d35;
+  font-size: clamp(1.8rem, 4vw, 2.65rem);
+  line-height: 1.15;
+}
+
+.description {
+  max-width: 660px;
+  margin: 12px auto 0;
+  color: #526761;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.accessibility {
+  box-sizing: border-box;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid rgba(196, 216, 205, 0.9);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 14px 38px rgba(32, 79, 61, 0.09);
+  backdrop-filter: blur(8px);
+}
+
+.accessibilityHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.accessibilityHeading h2 {
+  margin: 0;
+  color: #1c513c;
+  font-size: 1.45rem;
+}
+
+.savedNote {
+  margin-bottom: 3px;
+  color: #687c75;
+  font-size: 0.82rem;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.filterField,
+.scaleField {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  color: #294c41;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.filterField select {
+  width: 100%;
+  min-height: 42px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  border: 1px solid #cadbd1;
+  border-radius: 9px;
+  color: #294c41;
+  background: #fbfdfb;
+  font: inherit;
+}
+
+.scaleField > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.scaleField output {
+  color: #247b58;
+  font-variant-numeric: tabular-nums;
+}
+
+.scaleField input {
+  width: 100%;
+  accent-color: #27865e;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 16px;
+  margin-top: 22px;
+}
+
+.option {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #35554b;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.option input {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  accent-color: #27865e;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.startButton {
+  min-width: 190px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(110deg, #207b58, #3783a8);
+  box-shadow: 0 8px 18px rgba(38, 115, 87, 0.2);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.startButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 11px 22px rgba(38, 115, 87, 0.25);
+}
+
+.startButton:focus-visible,
+.filterField select:focus-visible,
+.scaleField input:focus-visible,
+.option input:focus-visible {
+  outline: 3px solid #e3bd55;
+  outline-offset: 3px;
+}
+
+.startButton span {
+  font-size: 1.2rem;
+}
+
+.actions p {
+  margin: 0;
+  color: #687c75;
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+@media (max-width: 680px) {
+  .page {
+    padding: 22px 18px 30px;
+  }
+
+  .header {
+    align-items: flex-start;
+  }
+
+  .headerNote {
+    max-width: 130px;
+  }
+
+  .accessibilityHeading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .controls,
+  .options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .headerNote {
+    text-align: left;
+  }
+
+  .controls,
+  .options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .startButton {
+    transition: none;
+  }
+}

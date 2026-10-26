@@ -1,9 +1,11 @@
 import { createContext, useContext } from "react";
 
 export type AccessibilityPreferences = {
-  colorFilter: "none" | "protanopia" | "deuteranopia" | "tritanopia";
+  colorFilter: "none" | "protanopia" | "deuteranopia" | "tritanopia" | "monochromacy";
   textScale: number;
   wideLetters: boolean;
+  wideLines: boolean;
+  underlinedLinks: boolean;
   highContrast: boolean;
   dyslexiaFriendly: boolean;
   reducedMotion: boolean;

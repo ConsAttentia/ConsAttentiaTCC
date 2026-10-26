@@ -11,13 +11,24 @@ declare global {
 
 export default function Vlibras() {
   const { preferences } = useAccessibility();
+  const accessibilityClasses = [
+    "accessibility-widget",
+    preferences.colorFilter !== "none" ? `accessibility-${preferences.colorFilter}` : "",
+    preferences.wideLetters ? "accessibility-wide-letters" : "",
+    preferences.wideLines ? "accessibility-wide-lines" : "",
+    preferences.underlinedLinks ? "accessibility-underlined-links" : "",
+    preferences.highContrast ? "accessibility-high-contrast" : "",
+    preferences.dyslexiaFriendly ? "accessibility-dyslexia-friendly" : "",
+    preferences.reducedMotion ? "accessibility-reduced-motion" : "",
+  ].filter(Boolean);
+  const accessibilityClassNames = accessibilityClasses.join(" ");
 
   useEffect(() => {
     if (!preferences.vlibras) return;
 
     const widgetRoot = document.createElement("div");
     widgetRoot.setAttribute("vw", "");
-    widgetRoot.className = "enabled";
+    widgetRoot.className = "enabled accessibility-widget";
 
     const accessButton = document.createElement("div");
     accessButton.setAttribute("vw-access-button", "");
@@ -59,6 +70,25 @@ export default function Vlibras() {
       document.getElementById("vlibras-access-wrapper")?.remove();
     };
   }, [preferences.vlibras]);
+
+  useEffect(() => {
+    const widgetRoot = document.querySelector("[vw]");
+    if (!widgetRoot) return;
+
+    widgetRoot.classList.remove(
+      "accessibility-protanopia",
+      "accessibility-deuteranopia",
+      "accessibility-tritanopia",
+      "accessibility-monochromacy",
+      "accessibility-wide-letters",
+      "accessibility-wide-lines",
+      "accessibility-underlined-links",
+      "accessibility-high-contrast",
+      "accessibility-dyslexia-friendly",
+      "accessibility-reduced-motion",
+    );
+    widgetRoot.classList.add(...accessibilityClassNames.split(" ").filter((className) => className && className !== "accessibility-widget"));
+  }, [accessibilityClassNames]);
 
   return null;
 }

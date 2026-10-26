@@ -173,7 +173,7 @@ export default function Perfil() {
           <section className={styles.section}>
             <h2>Sessão não encontrada</h2>
             <p className={styles.hint}>Entre na sua conta para consultar e editar o perfil.</p>
-            <button className={styles.button} type="button" onClick={() => navigate("/")}>Ir para login</button>
+            <button className={styles.button} type="button" onClick={() => navigate("/login")}>Ir para login</button>
           </section>
         ) : (
           <div className={styles.layout}>

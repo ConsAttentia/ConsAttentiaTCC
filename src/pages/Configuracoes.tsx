@@ -28,6 +28,7 @@ export default function Configuracoes() {
                 <option value="protanopia">Protanopia</option>
                 <option value="deuteranopia">Deuteranopia</option>
                 <option value="tritanopia">Tritanopia</option>
+                <option value="monochromacy">Monocromia</option>
               </select>
             </label>
             <label className={styles.rangeRow}>

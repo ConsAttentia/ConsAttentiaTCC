@@ -1,7 +1,8 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Register from "../../pages/Register";
 import Login from "../../pages/Login";
+import BoasVindas from "../../pages/BoasVindas";
 import Home from "../../pages/Home";
 import Selecao from "../../pages/selecao";
 import Tohe from "../../pages/Tohe";
@@ -19,7 +20,11 @@ const AppRoutes: React.FC = () => {
     <BrowserRouter>
       <AccessibilityProvider>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route
+            path="/"
+            element={localStorage.getItem("consattentia-welcome-completed") === "true" ? <Navigate to="/login" replace /> : <BoasVindas />}
+          />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/selecao" element={<Selecao />} />

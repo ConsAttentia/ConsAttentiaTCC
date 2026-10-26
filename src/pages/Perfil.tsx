@@ -4,6 +4,8 @@ import { EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential, up
 import type { User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import MenuConta from "../componentes/MenuConta";
+import { downloadTestHistoryPdf, getTestHistory, testHistoryUpdatedEvent } from "../componentes/historicoTestes";
+import type { TestHistoryEntry } from "../componentes/historicoTestes";
 import { auth } from "../firebase/firebase";
 import styles from "./PaginaConta.module.css";
 
@@ -21,6 +23,12 @@ function formatDate(value?: string) {
   return Number.isNaN(date.getTime()) ? "Não disponível" : date.toLocaleDateString("pt-BR");
 }
 
+function formatCompletedAt(value: Date | null) {
+  return value
+    ? value.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })
+    : "Data não disponível";
+}
+
 export default function Perfil() {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
@@ -33,6 +41,11 @@ export default function Perfil() {
   const [status, setStatus] = useState("");
   const [isError, setIsError] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [testHistory, setTestHistory] = useState<TestHistoryEntry[]>([]);
+  const [historyLoading, setHistoryLoading] = useState(true);
+  const [historyError, setHistoryError] = useState("");
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [downloadError, setDownloadError] = useState("");
 
   useEffect(() => {
     if (!auth) {
@@ -40,11 +53,46 @@ export default function Perfil() {
     }
     return onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setTestHistory([]);
+      setHistoryLoading(Boolean(currentUser));
+      setHistoryError("");
+      setDownloadError("");
       setUsername(currentUser?.displayName ?? "");
       setSavedName(currentUser?.displayName ?? "");
       setLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    let isActive = true;
+    const loadHistory = () => {
+      void getTestHistory(user.uid).then((entries) => {
+        if (!isActive) return;
+        setTestHistory(entries);
+        setHistoryError("");
+      }).catch(() => {
+        if (!isActive) return;
+        setHistoryError("Não foi possível carregar o histórico salvo neste navegador.");
+      }).finally(() => {
+        if (isActive) setHistoryLoading(false);
+      });
+    };
+
+    const onHistoryUpdated = (event: Event) => {
+      const updatedUserId = (event as CustomEvent<{ userId: string }>).detail?.userId;
+      if (updatedUserId === user.uid) loadHistory();
+    };
+
+    loadHistory();
+    window.addEventListener(testHistoryUpdatedEvent, onHistoryUpdated);
+    window.addEventListener("focus", loadHistory);
+    return () => {
+      isActive = false;
+      window.removeEventListener(testHistoryUpdatedEvent, onHistoryUpdated);
+      window.removeEventListener("focus", loadHistory);
+    };
+  }, [user]);
 
   const handleUsername = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -95,6 +143,18 @@ export default function Perfil() {
       setIsError(true);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDownload = async (entry: TestHistoryEntry) => {
+    setDownloadingId(entry.id);
+    setDownloadError("");
+    try {
+      await downloadTestHistoryPdf(entry);
+    } catch {
+      setDownloadError(`Não foi possível gerar o relatório de ${entry.testName}. Tente novamente.`);
+    } finally {
+      setDownloadingId(null);
     }
   };
 
@@ -161,6 +221,48 @@ export default function Perfil() {
                 </div>
                 <button className={styles.button} type="submit" disabled={saving}>Atualizar senha</button>
               </form>
+            </section>
+            <section className={`${styles.section} ${styles.sectionWide}`}>
+              <h2>Histórico de testes</h2>
+              <p className={styles.hint}>O histórico fica salvo apenas neste navegador e nesta conta. Os PDFs são gerados no momento do download.</p>
+              {historyLoading ? (
+                <p className={styles.status} role="status">Carregando histórico...</p>
+              ) : historyError ? (
+                <p className={styles.statusError} role="alert">{historyError}</p>
+              ) : testHistory.length === 0 ? (
+                <p className={styles.hint}>Nenhum teste concluído foi registrado neste navegador para esta conta ainda.</p>
+              ) : (
+                <ul className={styles.historyList}>
+                  {testHistory.map((entry) => (
+                    <li className={styles.historyItem} key={entry.id}>
+                      <div className={styles.historySummary}>
+                        <h3>{entry.testName}</h3>
+                        <p>{formatCompletedAt(entry.completedAt)}</p>
+                        <p>{entry.score} pontos · {entry.attempts} tentativas · {entry.duration}</p>
+                        {entry.details.length > 0 && (
+                          <dl className={styles.historyDetails}>
+                            {entry.details.map(([label, value]) => (
+                              <div key={label}>
+                                <dt>{label}</dt>
+                                <dd>{value}</dd>
+                              </div>
+                            ))}
+                          </dl>
+                        )}
+                      </div>
+                      <button
+                        className={styles.button}
+                        type="button"
+                        disabled={downloadingId !== null}
+                        onClick={() => void handleDownload(entry)}
+                      >
+                        {downloadingId === entry.id ? "Gerando PDF..." : "Baixar PDF"}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {downloadError && <p className={styles.statusError} role="alert">{downloadError}</p>}
             </section>
             {status && <p className={`${styles.status} ${isError ? styles.statusError : ""}`} role={isError ? "alert" : "status"}>{status}</p>}
           </div>

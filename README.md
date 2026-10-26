@@ -1,5 +1,15 @@
 # React + TypeScript + Vite
 
+## Histórico de testes
+
+O histórico de testes é salvo localmente no navegador, separado por conta. Os PDFs são gerados no navegador quando o usuário solicita o download. Esse recurso não usa Firestore, Firebase Storage, CLI, deploy ou outro serviço externo.
+
+Os dados ficam neste navegador e neste dispositivo: não são sincronizados com outros dispositivos e podem ser apagados ao limpar os dados do navegador. A autenticação atual do aplicativo continua sendo usada para separar os registros por usuário.
+
+Todo novo teste deve usar o gerador compartilhado de relatórios e registrar sua conclusão com `useRegistrarTesteConcluido(report, phase === "results")`, como fazem TOHE, AATS, ADAS e AATA. O hook salva os resultados localmente; os PDFs são recriados a partir desses dados no download.
+
+Resultados de testes anteriores não são recuperáveis, pois não foram guardados no navegador.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

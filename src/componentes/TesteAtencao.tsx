@@ -5,6 +5,7 @@ import { auth } from "../firebase/firebase";
 import MenuConta from "./MenuConta";
 import { shareTestReport } from "./relatorioTeste";
 import type { TestReport } from "./relatorioTeste";
+import { useRegistrarTesteConcluido } from "./useRegistrarTesteConcluido";
 import styles from "./TesteAtencao.module.css";
 import logo from "../assets/fundoc.png";
 import easyAudio from "../assets/ConsAttentia Áudio Letra P 2.0.mp3";
@@ -207,6 +208,7 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
         ]
       : undefined,
   };
+  const historySave = useRegistrarTesteConcluido(report, phase === "results");
 
   const handleShare = async () => {
     setIsSharing(true);
@@ -366,6 +368,14 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
               <button className={styles.secondaryButton} type="button" onClick={resetTest}>Refazer teste</button>
               <button className={styles.shareButton} type="button" disabled={isSharing} onClick={handleShare}>{isSharing ? "Preparando PDF..." : "Compartilhar"}</button>
             </div>
+            {historySave.status === "saving" && <p className={styles.feedback} role="status">Salvando teste e PDF no histórico...</p>}
+            {historySave.status === "saved" && <p className={styles.feedback} role="status">Teste e PDF salvos no histórico do perfil.</p>}
+            {historySave.status === "error" && (
+              <p className={`${styles.feedback} ${styles.error}`} role="alert">
+                {historySave.error}{" "}
+                <button className={styles.secondaryButton} type="button" onClick={historySave.retry}>Tentar salvar novamente</button>
+              </p>
+            )}
             {reportMessage && <p className={styles.feedback} role="status">{reportMessage}</p>}
           </div>
         )}

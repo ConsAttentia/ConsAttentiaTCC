@@ -3,7 +3,8 @@ import styles from "./Selecao.module.css";
 import pose from "../assets/pose.png";
 import fita from "../assets/fita.png";
 import fundoc from "../assets/fundoc.png";
-import principalTwo from "../assets/principal2.jpg";
+import resenha from "../assets/resenha.png";
+import quebra from "../assets/quebra.png";
 import { useNavigate } from "react-router-dom";
 import MenuConta from "../componentes/MenuConta";
 
@@ -26,11 +27,19 @@ const experiments = [
   },
   {
     title: "ADAS",
-    image: principalTwo,
+    image: resenha,
     route: "/adaa",
-    alt: "Paisagem usada como imagem de referência para o teste de atenção alternada",
+    alt: "Pessoa visualizando uma imagem no computador",
     description:
       " Atividade de Atenção Seletiva é uma atividade que consiste em observar recortes de uma imagem principal e indicar a qual recorte se encaixa nessa imagem principal. Essa atividade vai treinar sua capacidade de selecionar apenas uma parte dos seus estímulos disponíveis.",
+  },
+  {
+    title: "AATA",
+    image: quebra,
+    route: "/aata",
+    alt: "Quebra-cabeça representando a alternância entre tarefas",
+    description:
+      "É uma atividade que desafia sua capacidade de alternar entre dois ou mais estímulos, que são intercalados entre si. O usuário deve clicar na tecla de espaço do computador ao encontrar imagens que seguem um determinado padrão na tela, um padrão que a atividade vai explicar, clicar ao ver um padrão não solicitado ou pressionar qualquer outra tecla resultara em erro.",
   },
 ];
 

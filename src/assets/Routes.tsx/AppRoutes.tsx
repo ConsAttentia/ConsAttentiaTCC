@@ -9,6 +9,7 @@ import Perfil from "../../pages/Perfil";
 import Configuracoes from "../../pages/Configuracoes";
 import AATS from "../../pages/AATS";
 import ADAA from "../../pages/ADAA";
+import AATA from "../../pages/AATA";
 import { AccessibilityProvider } from "../../componentes/Acessibilidade";
 import Vlibras from "../../componentes/Vlibras";
 
@@ -25,6 +26,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/tohe" element={<Tohe />} />
           <Route path="/aats" element={<AATS />} />
           <Route path="/adaa" element={<ADAA />} />
+          <Route path="/aata" element={<AATA />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
         </Routes>

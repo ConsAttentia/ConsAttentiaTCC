@@ -1,0 +1,287 @@
+.page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  color: #e8f0ec;
+  background: linear-gradient(125deg, #183a34 0%, #1d3640 100%);
+}
+
+.header {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(18px, 5vw, 58px);
+}
+
+.brand {
+  width: clamp(142px, 22vw, 205px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.brand img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) brightness(2);
+}
+
+.content {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 28px 18px 48px;
+}
+
+.panel {
+  width: min(100%, 760px);
+  padding: clamp(24px, 5vw, 48px);
+  box-sizing: border-box;
+  border: 1px solid rgba(211, 231, 221, 0.28);
+  border-radius: 10px;
+  color: #193e34;
+  background: rgba(248, 251, 249, 0.97);
+  box-shadow: 0 24px 60px rgba(4, 20, 25, 0.28);
+}
+
+.gamePanel {
+  width: min(100%, 840px);
+  text-align: center;
+}
+
+.kicker {
+  color: #217a56;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.panel h1 {
+  margin: 8px 0 12px;
+  color: #183c33;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  line-height: 1.12;
+}
+
+.lead {
+  max-width: 700px;
+  margin: 0;
+  color: #536a61;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.guidance {
+  margin: 14px 0 0;
+  color: #536a61;
+  line-height: 1.55;
+}
+
+.instructions {
+  display: grid;
+  gap: 10px;
+  margin: 24px 0;
+  padding: 18px;
+  border-radius: 7px;
+  color: #2b5544;
+  background: #eff7f1;
+  line-height: 1.5;
+}
+
+.instructions strong {
+  color: #193e34;
+}
+
+.blueInstruction,
+.yellowInstruction {
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: 800;
+}
+
+.blueInstruction {
+  color: #ffffff;
+  background: #1647d5;
+}
+
+.yellowInstruction {
+  color: #273100;
+  background: #f1d600;
+}
+
+.primaryButton,
+.secondaryButton,
+.shareButton {
+  min-height: 46px;
+  padding: 11px 20px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.primaryButton {
+  background: #19784f;
+}
+
+.primaryButton:hover {
+  background: #125b3b;
+}
+
+.secondaryButton {
+  color: #194a39;
+  border-color: #b9d3c5;
+  background: #edf6f0;
+}
+
+.secondaryButton:hover {
+  background: #deeee3;
+}
+
+.shareButton {
+  background: #b42318;
+}
+
+.shareButton:hover {
+  background: #8d1c14;
+}
+
+.shareButton:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 12px 28px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  color: #256143;
+  font-weight: 800;
+}
+
+.ruleCue {
+  width: fit-content;
+  margin: 22px auto 12px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.blueCue {
+  color: #ffffff;
+  background: #1647d5;
+}
+
+.yellowCue {
+  color: #273100;
+  background: #f1d600;
+}
+
+.stimulus {
+  min-height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 5vw, 48px);
+}
+
+.stimulus img {
+  width: clamp(90px, 20vw, 150px);
+  height: clamp(140px, 31vw, 220px);
+  object-fit: contain;
+}
+
+.stimulus > span {
+  color: #708178;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.feedback {
+  min-height: 24px;
+  margin: 14px 0 0;
+  color: #246044;
+  font-weight: 700;
+}
+
+.error {
+  color: #a12622;
+}
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 26px 0 8px;
+}
+
+.results > div {
+  padding: 14px;
+  border-left: 3px solid #2b9569;
+  background: #f0f6f2;
+}
+
+.results dt {
+  color: #62766d;
+  font-size: 0.8rem;
+}
+
+.results dd {
+  margin: 5px 0 0;
+  color: #173e32;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.results dd span {
+  color: #64796f;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.resultActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.footer {
+  padding: 18px;
+  color: #b8ccc2;
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .header {
+    height: 66px;
+  }
+
+  .content {
+    padding: 18px 12px 28px;
+  }
+
+  .stimulus {
+    min-height: 180px;
+  }
+
+  .results {
+    grid-template-columns: 1fr;
+  }
+
+  .resultActions > button {
+    flex: 1 1 100%;
+  }
+}

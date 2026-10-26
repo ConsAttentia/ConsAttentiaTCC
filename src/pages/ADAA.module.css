@@ -214,6 +214,8 @@
   font-weight: 700;
 }
 
+.error { color: #a12622; }
+
 .footer {
   padding: 18px;
   color: #b8ccc2;

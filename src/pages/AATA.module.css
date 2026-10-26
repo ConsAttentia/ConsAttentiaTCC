@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  color: #e8f0ec;
-  background: linear-gradient(125deg, #183a34 0%, #1d3640 100%);
+  color: var(--color-hex-e8f0ec);
+  background: linear-gradient(125deg, var(--color-hex-183a34) 0%, var(--color-hex-1d3640) 100%);
 }
 
 .header {
@@ -20,7 +20,7 @@
   width: clamp(142px, 22vw, 205px);
   padding: 0;
   border: 0;
-  background: transparent;
+  background: var(--color-transparent);
   cursor: pointer;
 }
 
@@ -42,11 +42,11 @@
   width: min(100%, 760px);
   padding: clamp(24px, 5vw, 48px);
   box-sizing: border-box;
-  border: 1px solid rgba(211, 231, 221, 0.28);
+  border: 1px solid var(--color-rgba-211-231-221-0-28);
   border-radius: 10px;
-  color: #193e34;
-  background: rgba(248, 251, 249, 0.97);
-  box-shadow: 0 24px 60px rgba(4, 20, 25, 0.28);
+  color: var(--color-hex-193e34);
+  background: var(--color-rgba-248-251-249-0-97);
+  box-shadow: 0 24px 60px var(--color-rgba-4-20-25-0-28);
 }
 
 .gamePanel {
@@ -55,30 +55,30 @@
 }
 
 .kicker {
-  color: #217a56;
-  font-size: 0.76rem;
+  color: var(--color-hex-217a56);
+  font-size: var(--font-size-0-76rem);
   font-weight: 800;
   text-transform: uppercase;
 }
 
 .panel h1 {
   margin: 8px 0 12px;
-  color: #183c33;
-  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  color: var(--color-text);
+  font-size: var(--font-size-clamp-1-8rem-5vw-2-6rem);
   line-height: 1.12;
 }
 
 .lead {
   max-width: 700px;
   margin: 0;
-  color: #536a61;
-  font-size: 1.02rem;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-1-02rem);
   line-height: 1.6;
 }
 
 .guidance {
   margin: 14px 0 0;
-  color: #536a61;
+  color: var(--color-text-muted);
   line-height: 1.55;
 }
 
@@ -88,13 +88,13 @@
   margin: 24px 0;
   padding: 18px;
   border-radius: 7px;
-  color: #2b5544;
-  background: #eff7f1;
+  color: var(--color-hex-2b5544);
+  background: var(--color-hex-eff7f1);
   line-height: 1.5;
 }
 
 .instructions strong {
-  color: #193e34;
+  color: var(--color-hex-193e34);
 }
 
 .blueInstruction,
@@ -106,13 +106,13 @@
 }
 
 .blueInstruction {
-  color: #ffffff;
-  background: #1647d5;
+  color: var(--color-surface);
+  background: var(--color-hex-1647d5);
 }
 
 .yellowInstruction {
-  color: #273100;
-  background: #f1d600;
+  color: var(--color-hex-273100);
+  background: var(--color-hex-f1d600);
 }
 
 .primaryButton,
@@ -120,38 +120,38 @@
 .shareButton {
   min-height: 46px;
   padding: 11px 20px;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-transparent);
   border-radius: 6px;
-  color: #ffffff;
+  color: var(--color-surface);
   font: inherit;
   font-weight: 800;
   cursor: pointer;
 }
 
 .primaryButton {
-  background: #19784f;
+  background: var(--color-primary);
 }
 
 .primaryButton:hover {
-  background: #125b3b;
+  background: var(--color-hex-125b3b);
 }
 
 .secondaryButton {
-  color: #194a39;
-  border-color: #b9d3c5;
-  background: #edf6f0;
+  color: var(--color-hex-194a39);
+  border-color: var(--color-hex-b9d3c5);
+  background: var(--color-hex-edf6f0);
 }
 
 .secondaryButton:hover {
-  background: #deeee3;
+  background: var(--color-hex-deeee3);
 }
 
 .shareButton {
-  background: #b42318;
+  background: var(--color-hex-b42318);
 }
 
 .shareButton:hover {
-  background: #8d1c14;
+  background: var(--color-hex-8d1c14);
 }
 
 .shareButton:disabled {
@@ -165,7 +165,7 @@
   gap: 12px 28px;
   flex-wrap: wrap;
   margin-top: 20px;
-  color: #256143;
+  color: var(--color-hex-256143);
   font-weight: 800;
 }
 
@@ -179,13 +179,13 @@
 }
 
 .blueCue {
-  color: #ffffff;
-  background: #1647d5;
+  color: var(--color-surface);
+  background: var(--color-hex-1647d5);
 }
 
 .yellowCue {
-  color: #273100;
-  background: #f1d600;
+  color: var(--color-hex-273100);
+  background: var(--color-hex-f1d600);
 }
 
 .stimulus {
@@ -203,20 +203,20 @@
 }
 
 .stimulus > span {
-  color: #708178;
-  font-size: 1.4rem;
+  color: var(--color-hex-708178);
+  font-size: var(--font-size-1-4rem);
   font-weight: 800;
 }
 
 .feedback {
   min-height: 24px;
   margin: 14px 0 0;
-  color: #246044;
+  color: var(--color-hex-246044);
   font-weight: 700;
 }
 
 .error {
-  color: #a12622;
+  color: var(--color-danger);
 }
 
 .results {
@@ -228,25 +228,25 @@
 
 .results > div {
   padding: 14px;
-  border-left: 3px solid #2b9569;
-  background: #f0f6f2;
+  border-left: 3px solid var(--color-success);
+  background: var(--color-hex-f0f6f2);
 }
 
 .results dt {
-  color: #62766d;
-  font-size: 0.8rem;
+  color: var(--color-hex-62766d);
+  font-size: var(--font-size-0-8rem);
 }
 
 .results dd {
   margin: 5px 0 0;
-  color: #173e32;
-  font-size: 1.1rem;
+  color: var(--color-hex-173e32);
+  font-size: var(--font-size-1-1rem);
   font-weight: 800;
 }
 
 .results dd span {
-  color: #64796f;
-  font-size: 0.82rem;
+  color: var(--color-hex-64796f);
+  font-size: var(--font-size-0-82rem);
   font-weight: 500;
 }
 
@@ -259,8 +259,8 @@
 
 .footer {
   padding: 18px;
-  color: #b8ccc2;
-  font-size: 0.78rem;
+  color: var(--color-hex-b8ccc2);
+  font-size: var(--font-size-0-78rem);
   text-align: center;
 }
 

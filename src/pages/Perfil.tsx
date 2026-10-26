@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
-import type { FormEvent } from "react";
-import { EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential, updatePassword, updateProfile } from "firebase/auth";
-import type { User } from "firebase/auth";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EmailAuthProvider, reauthenticateWithCredential, updatePassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import MenuConta from "../componentes/MenuConta";
 import { downloadTestHistoryPdf, getTestHistory, testHistoryUpdatedEvent } from "../componentes/historicoTestes";
 import type { TestHistoryEntry } from "../componentes/historicoTestes";
-import { auth } from "../firebase/firebase";
+import { getAuthErrorMessage } from "../componentes/authErrors";
+import { useAuth } from "../componentes/useAuth";
+import { passwordChangeSchema, usernameSchema } from "../schemas/formSchemas";
+import type { PasswordChangeFormValues, UsernameFormValues } from "../schemas/formSchemas";
 import styles from "./PaginaConta.module.css";
-
-function authError(error: unknown) {
-  const code = (error as { code?: string } | null)?.code;
-  if (code === "auth/wrong-password" || code === "auth/invalid-credential") return "A senha atual não confere.";
-  if (code === "auth/weak-password") return "A nova senha precisa ter pelo menos 6 caracteres.";
-  if (code === "auth/requires-recent-login") return "Entre novamente na conta e tente de novo.";
-  return "Não foi possível atualizar os dados. Confira os campos e tente novamente.";
-}
 
 function formatDate(value?: string) {
   if (!value) return "Não disponível";
@@ -29,39 +24,47 @@ function formatCompletedAt(value: Date | null) {
     : "Data não disponível";
 }
 
+interface HistoryLoadResult {
+  userId: string;
+  entries: TestHistoryEntry[];
+  error: string | null;
+}
+
 export default function Perfil() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(Boolean(auth));
-  const [username, setUsername] = useState("");
-  const [savedName, setSavedName] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const { user, loading } = useAuth();
+  const [savedNameUpdate, setSavedNameUpdate] = useState<{ userId: string; name: string } | null>(null);
   const [status, setStatus] = useState("");
   const [isError, setIsError] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [testHistory, setTestHistory] = useState<TestHistoryEntry[]>([]);
-  const [historyLoading, setHistoryLoading] = useState(true);
-  const [historyError, setHistoryError] = useState("");
+  const [historyResult, setHistoryResult] = useState<HistoryLoadResult | null>(null);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState("");
+  const {
+    register: registerUsername,
+    handleSubmit: handleUsernameSubmit,
+    formState: { errors: usernameErrors },
+  } = useForm<UsernameFormValues>({
+    resolver: zodResolver(usernameSchema),
+    values: { username: user?.displayName ?? "" },
+  });
+  const {
+    register: registerPassword,
+    handleSubmit: handlePasswordSubmit,
+    reset: resetPassword,
+    formState: { errors: passwordErrors },
+  } = useForm<PasswordChangeFormValues>({
+    resolver: zodResolver(passwordChangeSchema),
+    defaultValues: { currentPassword: "", newPassword: "", confirmPassword: "" },
+  });
 
-  useEffect(() => {
-    if (!auth) {
-      return;
-    }
-    return onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setTestHistory([]);
-      setHistoryLoading(Boolean(currentUser));
-      setHistoryError("");
-      setDownloadError("");
-      setUsername(currentUser?.displayName ?? "");
-      setSavedName(currentUser?.displayName ?? "");
-      setLoading(false);
-    });
-  }, []);
+  const savedName = savedNameUpdate && savedNameUpdate.userId === user?.uid
+    ? savedNameUpdate.name
+    : user?.displayName ?? "";
+  const historyMatchesUser = user !== null && historyResult?.userId === user.uid;
+  const historyLoading = Boolean(user && !historyMatchesUser);
+  const historyError = historyMatchesUser ? historyResult?.error ?? "" : "";
+  const testHistory = historyMatchesUser ? historyResult?.entries ?? [] : [];
 
   useEffect(() => {
     if (!user) return;
@@ -69,13 +72,14 @@ export default function Perfil() {
     const loadHistory = () => {
       void getTestHistory(user.uid).then((entries) => {
         if (!isActive) return;
-        setTestHistory(entries);
-        setHistoryError("");
+        setHistoryResult({ userId: user.uid, entries, error: null });
       }).catch(() => {
         if (!isActive) return;
-        setHistoryError("Não foi possível carregar o histórico salvo neste navegador.");
-      }).finally(() => {
-        if (isActive) setHistoryLoading(false);
+        setHistoryResult({
+          userId: user.uid,
+          entries: [],
+          error: "Não foi possível carregar o histórico salvo neste navegador.",
+        });
       });
     };
 
@@ -94,52 +98,37 @@ export default function Perfil() {
     };
   }, [user]);
 
-  const handleUsername = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!user || !username.trim()) return;
+  const handleUsername = async ({ username }: UsernameFormValues) => {
+    if (!user) return;
     setSaving(true);
     setStatus("");
     setIsError(false);
     try {
-      await updateProfile(user, { displayName: username.trim() });
-      localStorage.setItem("consattentia-user-name", username.trim());
-      setSavedName(username.trim());
+      await updateProfile(user, { displayName: username });
+      localStorage.setItem("consattentia-user-name", username);
+      setSavedNameUpdate({ userId: user.uid, name: username });
       setStatus("Nome de usuário atualizado.");
     } catch (error) {
-      setStatus(authError(error));
+      setStatus(getAuthErrorMessage(error, "profile"));
       setIsError(true);
     } finally {
       setSaving(false);
     }
   };
 
-  const handlePassword = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handlePassword = async ({ currentPassword, newPassword }: PasswordChangeFormValues) => {
     if (!user?.email) return;
     setStatus("");
     setIsError(false);
-    if (newPassword.length < 6) {
-      setStatus("A nova senha precisa ter pelo menos 6 caracteres.");
-      setIsError(true);
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setStatus("A confirmação da senha não corresponde.");
-      setIsError(true);
-      return;
-    }
-
     setSaving(true);
     try {
       const credential = EmailAuthProvider.credential(user.email, currentPassword);
       await reauthenticateWithCredential(user, credential);
       await updatePassword(user, newPassword);
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
+      resetPassword();
       setStatus("Senha atualizada. Use a nova senha no próximo login.");
     } catch (error) {
-      setStatus(authError(error));
+      setStatus(getAuthErrorMessage(error, "profile"));
       setIsError(true);
     } finally {
       setSaving(false);
@@ -193,30 +182,61 @@ export default function Perfil() {
 
             <section className={styles.section}>
               <h2>Nome de usuário</h2>
-              <form onSubmit={handleUsername}>
+              <form onSubmit={handleUsernameSubmit(handleUsername)} noValidate>
                 <label className={styles.field}>
                   Nome exibido no aplicativo
-                  <input className={styles.input} autoComplete="nickname" maxLength={60} required value={username} onChange={(event) => setUsername(event.target.value)} />
+                  <input
+                    className={styles.input}
+                    autoComplete="nickname"
+                    aria-invalid={Boolean(usernameErrors.username)}
+                    aria-describedby={usernameErrors.username ? "profile-username-error" : undefined}
+                    {...registerUsername("username")}
+                  />
                 </label>
+                {usernameErrors.username && <p className={styles.fieldError} id="profile-username-error" role="alert">{usernameErrors.username.message}</p>}
                 <button className={styles.button} type="submit" disabled={saving}>Salvar nome</button>
               </form>
             </section>
 
             <section className={`${styles.section} ${styles.sectionWide}`}>
               <h2>Alterar senha</h2>
-              <form onSubmit={handlePassword}>
+              <form onSubmit={handlePasswordSubmit(handlePassword)} noValidate>
                 <div className={styles.layout}>
                   <label className={styles.field}>
                     Senha atual
-                    <input className={styles.input} type="password" autoComplete="current-password" required value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)} />
+                    <input
+                      className={styles.input}
+                      type="password"
+                      autoComplete="current-password"
+                      aria-invalid={Boolean(passwordErrors.currentPassword)}
+                      aria-describedby={passwordErrors.currentPassword ? "profile-current-password-error" : undefined}
+                      {...registerPassword("currentPassword")}
+                    />
+                    {passwordErrors.currentPassword && <span className={styles.fieldError} id="profile-current-password-error" role="alert">{passwordErrors.currentPassword.message}</span>}
                   </label>
                   <label className={styles.field}>
                     Nova senha
-                    <input className={styles.input} type="password" autoComplete="new-password" minLength={6} required value={newPassword} onChange={(event) => setNewPassword(event.target.value)} />
+                    <input
+                      className={styles.input}
+                      type="password"
+                      autoComplete="new-password"
+                      aria-invalid={Boolean(passwordErrors.newPassword)}
+                      aria-describedby={passwordErrors.newPassword ? "profile-new-password-error" : undefined}
+                      {...registerPassword("newPassword")}
+                    />
+                    {passwordErrors.newPassword && <span className={styles.fieldError} id="profile-new-password-error" role="alert">{passwordErrors.newPassword.message}</span>}
                   </label>
                   <label className={styles.field}>
                     Confirmar nova senha
-                    <input className={styles.input} type="password" autoComplete="new-password" minLength={6} required value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} />
+                    <input
+                      className={styles.input}
+                      type="password"
+                      autoComplete="new-password"
+                      aria-invalid={Boolean(passwordErrors.confirmPassword)}
+                      aria-describedby={passwordErrors.confirmPassword ? "profile-confirm-password-error" : undefined}
+                      {...registerPassword("confirmPassword")}
+                    />
+                    {passwordErrors.confirmPassword && <span className={styles.fieldError} id="profile-confirm-password-error" role="alert">{passwordErrors.confirmPassword.message}</span>}
                   </label>
                 </div>
                 <button className={styles.button} type="submit" disabled={saving}>Atualizar senha</button>

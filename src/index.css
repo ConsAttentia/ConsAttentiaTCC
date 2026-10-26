@@ -1,9 +1,277 @@
-html, body, #root {
+:root {
+  --color-hex-000000: #000000;
+  --color-hex-0f4c30: #0f4c30;
+  --color-hex-11563b: #11563b;
+  --color-hex-123d68: #123d68;
+  --color-hex-125b3b: #125b3b;
+  --color-hex-163b34: #163b34;
+  --color-hex-1647d5: #1647d5;
+  --color-hex-172c2a: #172c2a;
+  --color-hex-172d36: #172d36;
+  --color-hex-173b35: #173b35;
+  --color-hex-173e32: #173e32;
+  --color-hex-174f3b: #174f3b;
+  --color-hex-17633f: #17633f;
+  --color-hex-176e4d: #176e4d;
+  --color-hex-176e55: #176e55;
+  --color-hex-183a34: #183a34;
+  --color-text: #183c33;
+  --color-hex-183d35: #183d35;
+  --color-hex-193c33: #193c33;
+  --color-hex-193e34: #193e34;
+  --color-hex-194a39: #194a39;
+  --color-primary: #19784f;
+  --color-hex-197b58: #197b58;
+  --color-hex-197e58: #197e58;
+  --color-hex-1a5edb: #1a5edb;
+  --color-hex-1a7e59: #1a7e59;
+  --color-hex-1a8961: #1a8961;
+  --color-hex-1b3c35: #1b3c35;
+  --color-hex-1b4f43: #1b4f43;
+  --color-hex-1c513c: #1c513c;
+  --color-hex-1d3640: #1d3640;
+  --color-hex-1e4658: #1e4658;
+  --color-hex-203f36: #203f36;
+  --color-hex-207b58: #207b58;
+  --color-hex-209263: #209263;
+  --color-hex-217a56: #217a56;
+  --color-hex-244d3d: #244d3d;
+  --color-hex-246044: #246044;
+  --color-hex-247b58: #247b58;
+  --color-hex-253340: #253340;
+  --color-hex-254b3d: #254b3d;
+  --color-hex-256143: #256143;
+  --color-hex-2575fc: #2575fc;
+  --color-hex-25805b: #25805b;
+  --color-hex-269467: #269467;
+  --color-hex-273100: #273100;
+  --color-hex-27865e: #27865e;
+  --color-hex-279466: #279466;
+  --color-hex-28554a: #28554a;
+  --color-hex-294c41: #294c41;
+  --color-hex-2b5544: #2b5544;
+  --color-success: #2b9569;
+  --color-hex-32996f: #32996f;
+  --color-hex-33505b: #33505b;
+  --color-hex-35554b: #35554b;
+  --color-hex-3783a8: #3783a8;
+  --color-hex-3788b5: #3788b5;
+  --color-hex-38594e: #38594e;
+  --color-hex-3b9091: #3b9091;
+  --color-secondary: #3d7fac;
+  --color-hex-3d83b2: #3d83b2;
+  --color-hex-3f82b7: #3f82b7;
+  --color-hex-3f87bd: #3f87bd;
+  --color-hex-438474: #438474;
+  --color-hex-4f956c: #4f956c;
+  --color-hex-526761: #526761;
+  --color-hex-526b60: #526b60;
+  --color-hex-528067: #528067;
+  --color-text-muted: #536a61;
+  --color-hex-55706c: #55706c;
+  --color-hex-58736a: #58736a;
+  --color-hex-61756c: #61756c;
+  --color-hex-62766d: #62766d;
+  --color-hex-64796f: #64796f;
+  --color-hex-657970: #657970;
+  --color-hex-687c75: #687c75;
+  --color-hex-6aa5bd: #6aa5bd;
+  --color-hex-708178: #708178;
+  --color-hex-87958d: #87958d;
+  --color-hex-8d1c14: #8d1c14;
+  --color-hex-8f1c14: #8f1c14;
+  --color-hex-94b6a0: #94b6a0;
+  --color-hex-9bd8b9: #9bd8b9;
+  --color-danger: #a12622;
+  --color-hex-a53b3b: #a53b3b;
+  --color-hex-a6a6a6: #a6a6a6;
+  --color-hex-a9d9bd: #a9d9bd;
+  --color-hex-ab2921: #ab2921;
+  --color-hex-b42318: #b42318;
+  --color-hex-b4c8bc: #b4c8bc;
+  --color-hex-b8ccc2: #b8ccc2;
+  --color-hex-b8cdc3: #b8cdc3;
+  --color-hex-b94b4b: #b94b4b;
+  --color-hex-b9d3c5: #b9d3c5;
+  --color-hex-b9d8cc: #b9d8cc;
+  --color-hex-c8ddd6: #c8ddd6;
+  --color-hex-cadbd1: #cadbd1;
+  --color-hex-cfdfd8: #cfdfd8;
+  --color-hex-d36464: #d36464;
+  --color-hex-d3e0da: #d3e0da;
+  --color-hex-d5e4e5: #d5e4e5;
+  --color-hex-d8efdf: #d8efdf;
+  --color-hex-d9e2e5: #d9e2e5;
+  --color-hex-d9e6df: #d9e6df;
+  --color-hex-d9e9e3: #d9e9e3;
+  --color-hex-d9f2df: #d9f2df;
+  --color-hex-dbe4df: #dbe4df;
+  --color-hex-dce5e7: #dce5e7;
+  --color-background: #dce6ee;
+  --color-hex-dce8df: #dce8df;
+  --color-hex-deeee3: #deeee3;
+  --color-hex-e0e9e4: #e0e9e4;
+  --color-hex-e3bd55: #e3bd55;
+  --color-hex-e4efec: #e4efec;
+  --color-hex-e5edf0: #e5edf0;
+  --color-hex-e7e7e7: #e7e7e7;
+  --color-hex-e7eef2: #e7eef2;
+  --color-hex-e8e8e8: #e8e8e8;
+  --color-hex-e8f0ec: #e8f0ec;
+  --color-hex-eaf7f0: #eaf7f0;
+  --color-hex-edf2ef: #edf2ef;
+  --color-hex-edf2f1: #edf2f1;
+  --color-hex-edf6f0: #edf6f0;
+  --color-hex-eeeeee: #eeeeee;
+  --color-hex-eff7f1: #eff7f1;
+  --color-hex-eff8f2: #eff8f2;
+  --color-hex-f0f4f1: #f0f4f1;
+  --color-hex-f0f6f1: #f0f6f1;
+  --color-hex-f0f6f2: #f0f6f2;
+  --color-hex-f1d600: #f1d600;
+  --color-hex-f2ca68: #f2ca68;
+  --color-hex-f3c9a8: #f3c9a8;
+  --color-hex-f3f7f4: #f3f7f4;
+  --color-hex-f5d990: #f5d990;
+  --color-hex-f5faf8: #f5faf8;
+  --color-hex-f6cb51: #f6cb51;
+  --color-hex-f6fbf9: #f6fbf9;
+  --color-hex-f7dda0: #f7dda0;
+  --color-hex-f7f7f7: #f7f7f7;
+  --color-hex-f8fbf9: #f8fbf9;
+  --color-hex-fbfdfb: #fbfdfb;
+  --color-fff: #fff;
+  --color-hex-fff5f5: #fff5f5;
+  --color-surface: #ffffff;
+  --color-rgba-0-0-0-0-14: rgba(0, 0, 0, 0.14);
+  --color-rgba-0-0-0-0-16: rgba(0, 0, 0, 0.16);
+  --color-rgba-0-0-0-0-18: rgba(0, 0, 0, 0.18);
+  --color-rgba-0-0-0-0-28: rgba(0, 0, 0, 0.28);
+  --color-rgba-0-0-0-0-14: rgba(0,0,0,0.14);
+  --color-rgba-0-0-0-0-3: rgba(0,0,0,0.3);
+  --color-rgba-0-0-0-0-5: rgba(0,0,0,0.5);
+  --color-rgba-10-29-35-0-55: rgba(10, 29, 35, 0.55);
+  --color-rgba-12-58-77-0-2: rgba(12, 58, 77, 0.2);
+  --color-rgba-14-55-64-0-2: rgba(14, 55, 64, 0.2);
+  --color-rgba-14-55-64-0-28: rgba(14, 55, 64, 0.28);
+  --color-rgba-168-59-59-0-08: rgba(168, 59, 59, 0.08);
+  --color-rgba-18-39-45-0-94: rgba(18, 39, 45, 0.94);
+  --color-rgba-18-55-67-0-2: rgba(18, 55, 67, 0.2);
+  --color-rgba-18-71-96-0-32: rgba(18, 71, 96, 0.32);
+  --color-rgba-196-216-205-0-9: rgba(196, 216, 205, 0.9);
+  --color-rgba-206-225-229-0-72: rgba(206, 225, 229, 0.72);
+  --color-rgba-211-231-221-0-28: rgba(211, 231, 221, 0.28);
+  --color-rgba-22-73-78-0-16: rgba(22, 73, 78, 0.16);
+  --color-rgba-220-229-231-0-35: rgba(220, 229, 231, 0.35);
+  --color-rgba-225-234-241-0-9: rgba(225, 234, 241, 0.9);
+  --color-rgba-246-220-119-0-9: rgba(246, 220, 119, 0.9);
+  --color-rgba-248-251-249-0-97: rgba(248, 251, 249, 0.97);
+  --color-rgba-25-120-79-0-13: rgba(25, 120, 79, 0.13);
+  --color-rgba-25-120-79-0-16: rgba(25, 120, 79, 0.16);
+  --color-rgba-25-120-79-0-22: rgba(25, 120, 79, 0.22);
+  --color-rgba-255-255-255-0-04: rgba(255, 255, 255, 0.04);
+  --color-rgba-255-255-255-0-05: rgba(255, 255, 255, 0.05);
+  --color-rgba-255-255-255-0-12: rgba(255, 255, 255, 0.12);
+  --color-rgba-255-255-255-0-14: rgba(255, 255, 255, 0.14);
+  --color-rgba-255-255-255-0-17: rgba(255, 255, 255, 0.17);
+  --color-rgba-255-255-255-0-22: rgba(255, 255, 255, 0.22);
+  --color-rgba-255-255-255-0-27: rgba(255, 255, 255, 0.27);
+  --color-rgba-255-255-255-0-35: rgba(255, 255, 255, 0.35);
+  --color-rgba-255-255-255-0-42: rgba(255, 255, 255, 0.42);
+  --color-rgba-255-255-255-0-48: rgba(255, 255, 255, 0.48);
+  --color-rgba-255-255-255-0-62: rgba(255, 255, 255, 0.62);
+  --color-rgba-255-255-255-0-7: rgba(255, 255, 255, 0.7);
+  --color-rgba-255-255-255-0-72: rgba(255, 255, 255, 0.72);
+  --color-rgba-255-255-255-0-75: rgba(255, 255, 255, 0.75);
+  --color-rgba-255-255-255-0-76: rgba(255, 255, 255, 0.76);
+  --color-rgba-255-255-255-0-8: rgba(255, 255, 255, 0.8);
+  --color-rgba-255-255-255-0-85: rgba(255, 255, 255, 0.85);
+  --color-rgba-255-255-255-0-88: rgba(255, 255, 255, 0.88);
+  --color-rgba-255-255-255-0-9: rgba(255, 255, 255, 0.9);
+  --color-rgba-27-70-57-0-05: rgba(27, 70, 57, 0.05);
+  --color-rgba-28-96-91-0-12: rgba(28, 96, 91, 0.12);
+  --color-rgba-32-79-61-0-09: rgba(32, 79, 61, 0.09);
+  --color-rgba-35-99-85-0-06: rgba(35, 99, 85, 0.06);
+  --color-rgba-37-128-91-0-22: rgba(37, 128, 91, 0.22);
+  --color-rgba-37-91-91-0-1: rgba(37, 91, 91, 0.1);
+  --color-rgba-37-91-91-0-13: rgba(37, 91, 91, 0.13);
+  --color-rgba-37-91-91-0-18: rgba(37, 91, 91, 0.18);
+  --color-rgba-37-91-91-0-2: rgba(37, 91, 91, 0.2);
+  --color-rgba-38-115-87-0-2: rgba(38, 115, 87, 0.2);
+  --color-rgba-38-115-87-0-25: rgba(38, 115, 87, 0.25);
+  --color-rgba-39-76-94-0-16: rgba(39, 76, 94, 0.16);
+  --color-rgba-4-20-25-0-28: rgba(4, 20, 25, 0.28);
+  --color-rgba-49-95-145-0-75: rgba(49, 95, 145, 0.75);
+  --color-rgba-7-33-39-0-52: rgba(7, 33, 39, 0.52);
+  --color-rgba-8-37-43-0-24: rgba(8, 37, 43, 0.24);
+  --color-rgba-81-169-123-0-2: rgba(81, 169, 123, 0.2);
+  --color-rgba-86-145-183-0-18: rgba(86, 145, 183, 0.18);
+  --color-rgba-9-62-66-0-2: rgba(9, 62, 66, 0.2);
+  --color-transparent: transparent;
+  --color-white: white;
+  --font-size-0-68rem: 0.68rem;
+  --font-size-0-72rem: 0.72rem;
+  --font-size-0-74rem: 0.74rem;
+  --font-size-0-76rem: 0.76rem;
+  --font-size-0-78rem: 0.78rem;
+  --font-size-0-7rem: 0.7rem;
+  --font-size-0-82rem: 0.82rem;
+  --font-size-0-83rem: 0.83rem;
+  --font-size-0-84rem: 0.84rem;
+  --font-size-0-86rem: 0.86rem;
+  --font-size-0-88rem: 0.88rem;
+  --font-size-0-8rem: 0.8rem;
+  --font-size-0-92rem: 0.92rem;
+  --font-size-0-94rem: 0.94rem;
+  --font-size-0-95rem: 0.95rem;
+  --font-size-0-96rem: 0.96rem;
+  --font-size-0-9rem: 0.9rem;
+  --font-size-1-02rem: 1.02rem;
+  --font-size-1-05rem: 1.05rem;
+  --font-size-1-1rem: 1.1rem;
+  --font-size-1-2rem: 1.2rem;
+  --font-size-1-45rem: 1.45rem;
+  --font-size-1-4rem: 1.4rem;
+  --font-size-1-5rem: 1.5rem;
+  --font-size-1-6rem: 1.6rem;
+  --font-size-1-8rem: 1.8rem;
+  --font-size-base: 1rem;
+  --font-size-2rem: 2rem;
+  --font-size-4-5rem: 4.5rem;
+  --font-size-5-8rem: 5.8rem;
+  --font-size-clamp-0-82rem-1-7vw-1rem: clamp(0.82rem, 1.7vw, 1rem);
+  --font-size-clamp-0-92rem-1-7vw-1-04rem: clamp(0.92rem, 1.7vw, 1.04rem);
+  --font-size-clamp-0-92rem-2vw-1-1rem: clamp(0.92rem, 2vw, 1.1rem);
+  --font-size-clamp-1-2rem-3vw-1-55rem: clamp(1.2rem, 3vw, 1.55rem);
+  --font-size-clamp-1-35rem-4vw-1-8rem: clamp(1.35rem, 4vw, 1.8rem);
+  --font-size-clamp-1-6rem-3vw-2-2rem: clamp(1.6rem, 3vw, 2.2rem);
+  --font-size-clamp-1-8rem-4vw-2-65rem: clamp(1.8rem, 4vw, 2.65rem);
+  --font-size-clamp-1-8rem-5vw-2-5rem: clamp(1.8rem, 5vw, 2.5rem);
+  --font-size-clamp-1-8rem-5vw-2-6rem: clamp(1.8rem, 5vw, 2.6rem);
+  --font-size-clamp-1rem-2vw-1-1rem: clamp(1rem, 2vw, 1.1rem);
+  --font-size-clamp-1rem-2vw-1-2rem: clamp(1rem, 2vw, 1.2rem);
+  --font-size-clamp-2-2rem-6vw-3rem: clamp(2.2rem, 6vw, 3rem);
+  --font-size-clamp-2rem-5vw-3rem: clamp(2rem, 5vw, 3rem);
+  --font-size-clamp-2rem-6vw-3rem: clamp(2rem, 6vw, 3rem);
+
+  --font-family-base: "Carlito", sans-serif;
+  --font-family-accessibility: Verdana, sans-serif;
+  --font-family-display: "Trebuchet MS", sans-serif;
+  --font-family-sans: Arial, sans-serif;
+  --font-size-small: 0.875rem;
+  --font-size-large: 1.25rem;
+  --accessibility-color-filter: brightness(1);
+  --accessibility-contrast-filter: brightness(1);
+}
+
+html,
+body,
+#root {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Carlito", sans-serif;
+  font-family: var(--font-family-base);
 }
 
 .accessibilityRoot {
@@ -11,10 +279,9 @@ html, body, #root {
 }
 
 .accessibilityRoot {
-  --accessibility-color-filter: brightness(1);
-  --accessibility-contrast-filter: brightness(1);
   filter: var(--accessibility-color-filter) var(--accessibility-contrast-filter);
 }
+
 .accessibility-protanopia { --accessibility-color-filter: saturate(0.72) hue-rotate(-18deg); }
 .accessibility-deuteranopia { --accessibility-color-filter: saturate(0.7) hue-rotate(25deg); }
 .accessibility-tritanopia { --accessibility-color-filter: saturate(0.75) hue-rotate(180deg); }
@@ -28,7 +295,7 @@ html, body, #root {
 .accessibility-underlined-links a { text-decoration: underline !important; text-underline-offset: 0.15em; }
 .accessibility-high-contrast { --accessibility-contrast-filter: contrast(1.3); }
 .accessibility-dyslexia-friendly,
-.accessibility-dyslexia-friendly * { font-family: Verdana, sans-serif !important; }
+.accessibility-dyslexia-friendly * { font-family: var(--font-family-accessibility) !important; }
 .accessibility-reduced-motion,
 .accessibility-reduced-motion *,
 .accessibility-reduced-motion *::before,

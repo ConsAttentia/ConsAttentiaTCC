@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { getAuthErrorMessage } from "./authErrors";
+import { useAuth } from "./useAuth";
 import { useAccessibility } from "./AcessibilidadeContext";
 import styles from "./MenuConta.module.css";
 
@@ -10,6 +10,7 @@ export default function MenuConta() {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const { preferences } = useAccessibility();
   const accessibilityClasses = [
     "accessibility-widget",
@@ -25,7 +26,6 @@ export default function MenuConta() {
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [isOpen]);
-//ME MATA DE UMA VEZ 
   const navigateTo = (path: string) => {
     setIsOpen(false);
     navigate(path);
@@ -33,11 +33,10 @@ export default function MenuConta() {
 
   const handleLogout = async () => {
     try {
-      if (auth) await signOut(auth);
-      localStorage.removeItem("consattentia-user-name");
+      await logout();
       navigate("/", { replace: true });
-    } catch {
-      setError("Não foi possível sair. Tente novamente.");
+    } catch (logoutError: unknown) {
+      setError(getAuthErrorMessage(logoutError));
     }
   };
 

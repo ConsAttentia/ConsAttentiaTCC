@@ -1,110 +1,102 @@
-import React, { useState } from "react";
-import styles from "./Login.module.css"; 
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { getAuthErrorMessage } from "../componentes/authErrors";
+import { useAuth } from "../componentes/useAuth";
+import { registerSchema } from "../schemas/formSchemas";
+import type { RegisterFormValues } from "../schemas/formSchemas";
 import ModalMensagem from "../componentes/ModalMensagem";
 import Gray from "../assets/Gray.png";
 import FundoC from "../assets/fundoc.png";
-import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import styles from "./Register.module.css";
 
-const Register: React.FC = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Register() {
   const [modalMessage, setModalMessage] = useState<string | null>(null);
+  const { register: createAccount, authError } = useAuth();
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: { name: "", email: "", password: "" },
+  });
 
-  const handleSubmit = async () => {
-    if (!name.trim() || !email.trim() || !password.trim()) {
-      setModalMessage("Preencha username, email e senha.");
-      return;
-    }
-
-    if (!auth) {
-      setModalMessage("Configure as variáveis do Firebase para continuar.");
-      return;
-    }
-
+  const submitRegistration = async ({ name, email, password }: RegisterFormValues) => {
+    setModalMessage(null);
     try {
-      const credential = await createUserWithEmailAndPassword(auth, email.trim(), password);
-      await updateProfile(credential.user, { displayName: name.trim() });
-      localStorage.setItem("consattentia-user-name", name.trim());
+      await createAccount(name, email, password);
+      reset();
       setModalMessage("Cadastro concluído ✅");
-      setName("");
-      setEmail("");
-      setPassword("");
-      setTimeout(() => navigate("/login"), 1200);
+      window.setTimeout(() => navigate("/login"), 1200);
     } catch (error: unknown) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "Erro no cadastro!";
-
-      setModalMessage(
-        message.includes("email-already-in-use")
-          ? "Este email já está cadastrado."
-          : message.includes("weak-password")
-            ? "A senha deve ter pelo menos 6 caracteres."
-            : message
-      );
+      setModalMessage(getAuthErrorMessage(error));
     }
   };
 
   return (
-    
     <div className={styles.background}>
-      <div className={styles.shapeTop}></div>
-      <div className={styles.shapeBottom}></div>
+      <div className={styles.shapeTop} />
+      <div className={styles.shapeBottom} />
 
       <div className={styles.logo}>
         <img src={FundoC} alt="ConsAttentia" />
       </div>
 
-
-
-      <div className={styles.card}>
-        <img src={Gray} alt="User Icon" className={styles.icon} />
+      <form className={styles.card} onSubmit={handleSubmit(submitRegistration)} noValidate>
+        <img src={Gray} alt="" className={styles.icon} />
+        <label className={styles.visuallyHidden} htmlFor="register-name">Nome</label>
         <input
+          id="register-name"
           type="text"
-          placeholder="Username"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          autoComplete="name"
+          placeholder="Nome"
+          aria-invalid={Boolean(errors.name)}
+          aria-describedby={errors.name ? "register-name-error" : undefined}
+          {...register("name")}
           className={styles.input}
         />
+        {errors.name && <span className={styles.fieldError} id="register-name-error" role="alert">{errors.name.message}</span>}
+        <label className={styles.visuallyHidden} htmlFor="register-email">Email</label>
         <input
+          id="register-email"
           type="email"
+          autoComplete="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={errors.email ? "register-email-error" : undefined}
+          {...register("email")}
           className={styles.input}
         />
+        {errors.email && <span className={styles.fieldError} id="register-email-error" role="alert">{errors.email.message}</span>}
+        <label className={styles.visuallyHidden} htmlFor="register-password">Senha</label>
         <input
+          id="register-password"
           type="password"
+          autoComplete="new-password"
           placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          aria-invalid={Boolean(errors.password)}
+          aria-describedby={errors.password ? "register-password-error" : undefined}
+          {...register("password")}
           className={styles.input}
         />
-        <button onClick={handleSubmit} className={styles.button}>
-          Cadastrar
+        {errors.password && <span className={styles.fieldError} id="register-password-error" role="alert">{errors.password.message}</span>}
+        {authError && <p className={styles.fieldError} role="alert">{authError}</p>}
+        <button type="submit" className={styles.button} disabled={isSubmitting}>
+          {isSubmitting ? "Cadastrando..." : "Cadastrar"}
         </button>
-      </div>
+      </form>
 
-      <button
-        onClick={() => navigate("/login")}
-        className={styles.createAccount}
-      >
+      <button onClick={() => navigate("/login")} className={styles.createAccount} type="button">
         Já tenho uma conta
       </button>
 
       {modalMessage && (
-        <ModalMensagem
-          message={modalMessage}
-          onClose={() => setModalMessage(null)}
-        />
+        <ModalMensagem message={modalMessage} onClose={() => setModalMessage(null)} />
       )}
     </div>
   );
-};
-
-export default Register;
+}

@@ -1,6 +1,7 @@
-export type UsuarioTipo = {
-  codigo?: string;
-  nome?: string;
-  email?: string;
-  senha?: string;
-};
+export interface Usuario {
+  codigo: string;
+  nome: string;
+  email: string;
+}
+
+export type UsuarioTipo = Partial<Usuario>;

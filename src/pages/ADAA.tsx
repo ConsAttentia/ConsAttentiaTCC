@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebase";
 import MenuConta from "../componentes/MenuConta";
@@ -22,6 +23,12 @@ const levels = [
 
 type Phase = "intro" | "playing" | "results";
 type LevelAnswers = Array<number | null>;
+type GridFrameStyle = CSSProperties & { "--grid-aspect-ratio": string };
+type CropImageStyle = CSSProperties & {
+  "--crop-aspect-ratio": string;
+  "--crop-image": string;
+  "--crop-position": string;
+};
 
 function formatDuration(milliseconds: number) {
   const seconds = Math.max(0, Math.floor(milliseconds / 1000));
@@ -53,6 +60,9 @@ export default function ADAA() {
   const currentLevel = levels[levelIndex];
   const currentTargets = targets[levelIndex] ?? [];
   const currentAnswers = answers[levelIndex] ?? [];
+  const gridFrameStyle: GridFrameStyle = {
+    "--grid-aspect-ratio": currentLevel.aspectRatio,
+  };
 
   useEffect(() => {
     if (!startTime.current || phase !== "playing") return;
@@ -179,7 +189,7 @@ export default function ADAA() {
             <p className={styles.lead}>Selecione o quadrado da grade que corresponde ao recorte destacado.</p>
 
             <div className={styles.game}>
-              <div className={styles.gridFrame} style={{ aspectRatio: currentLevel.aspectRatio }}>
+              <div className={styles.gridFrame} style={gridFrameStyle}>
                 <img className={styles.gridImage} src={currentLevel.image} alt={`Imagem da ${currentLevel.name} dividida em uma grade de 5 por 5`} />
                 <div className={styles.gridButtons}>
                   {Array.from({ length: gridSize * gridSize }, (_, cellIndex) => (
@@ -195,25 +205,28 @@ export default function ADAA() {
               </div>
 
               <div className={styles.cropList} aria-label={`Recortes do nível ${currentLevel.name}`}>
-                {currentTargets.map((targetCell, index) => (
-                  <article
-                    key={`${levelIndex}-${index}`}
-                    className={`${styles.cropCard} ${index === cropIndex ? styles.activeCrop : ""} ${currentAnswers[index] !== null ? styles.answeredCrop : ""}`}
-                    aria-current={index === cropIndex ? "step" : undefined}
-                  >
-                    <div
-                      className={styles.cropImage}
-                      role="img"
-                      aria-label={`Recorte ${index + 1} de ${cropsPerLevel}`}
-                      style={{
-                        aspectRatio: currentLevel.aspectRatio,
-                        backgroundImage: `url("${currentLevel.image}")`,
-                        backgroundPosition: `${(targetCell % gridSize) * 25}% ${Math.floor(targetCell / gridSize) * 25}%`,
-                      }}
-                    />
-                    <span>{currentAnswers[index] !== null ? "Respondido" : `Recorte ${index + 1}`}</span>
-                  </article>
-                ))}
+                {currentTargets.map((targetCell, index) => {
+                  const cropStyle: CropImageStyle = {
+                    "--crop-aspect-ratio": currentLevel.aspectRatio,
+                    "--crop-image": `url("${currentLevel.image}")`,
+                    "--crop-position": `${(targetCell % gridSize) * 25}% ${Math.floor(targetCell / gridSize) * 25}%`,
+                  };
+                  return (
+                    <article
+                      key={`${levelIndex}-${index}`}
+                      className={`${styles.cropCard} ${index === cropIndex ? styles.activeCrop : ""} ${currentAnswers[index] !== null ? styles.answeredCrop : ""}`}
+                      aria-current={index === cropIndex ? "step" : undefined}
+                    >
+                      <div
+                        className={styles.cropImage}
+                        role="img"
+                        aria-label={`Recorte ${index + 1} de ${cropsPerLevel}`}
+                        style={cropStyle}
+                      />
+                      <span>{currentAnswers[index] !== null ? "Respondido" : `Recorte ${index + 1}`}</span>
+                    </article>
+                  );
+                })}
               </div>
             </div>
 

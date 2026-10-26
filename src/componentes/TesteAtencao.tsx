@@ -18,7 +18,10 @@ import principalTwo from "../assets/principal2.jpg";
 import principalThree from "../assets/principal3.jpg";
 import principalFour from "../assets/principal4.jpg";
 
-type TesteAtencaoProps = { testName: "TOHE" | "AATS"; visualLevels?: boolean };
+interface TesteAtencaoProps {
+  testName: "TOHE" | "AATS";
+  visualLevels?: boolean;
+}
 type Phase = "intro" | "visual-easy" | "visual-medium" | "ready-easy" | "playing-easy" | "ready-medium" | "playing-medium" | "results";
 type Piece = { id: string; image: string; alt: string };
 

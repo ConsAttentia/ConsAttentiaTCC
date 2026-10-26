@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { AccessibilityContext } from "./AcessibilidadeContext";
 import type { AccessibilityContextValue, AccessibilityPreferences } from "./AcessibilidadeContext";
 
@@ -16,6 +17,10 @@ const defaults: AccessibilityPreferences = {
   vlibras: true,
 };
 
+interface AccessibilityProviderProps {
+  children: ReactNode;
+}
+
 function loadPreferences(): AccessibilityPreferences {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -25,7 +30,7 @@ function loadPreferences(): AccessibilityPreferences {
   }
 }
 
-export function AccessibilityProvider({ children }: { children: React.ReactNode }) {
+export function AccessibilityProvider({ children }: AccessibilityProviderProps) {
   const [preferences, setPreferences] = useState(loadPreferences);
 
   useEffect(() => {

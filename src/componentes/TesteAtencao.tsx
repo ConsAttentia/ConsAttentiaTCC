@@ -10,34 +10,135 @@ import styles from "./TesteAtencao.module.css";
 import logo from "../assets/fundoc.png";
 import easyAudio from "../assets/ConsAttentia Áudio Letra P 2.0.mp3";
 import mediumAudio from "../assets/ConsAttentia Áudio Roupa 2.0.mp3";
-import easyOne from "../assets/facil1.jpeg";
-import easyTwo from "../assets/facil2.jpeg";
-import easyThree from "../assets/facil3.jpeg";
-import principalOne from "../assets/principal1.jpg";
-import principalTwo from "../assets/principal2.jpg";
-import principalThree from "../assets/principal3.jpg";
-import principalFour from "../assets/principal4.jpg";
 
 interface TesteAtencaoProps {
   testName: "TOHE" | "AATS";
   visualLevels?: boolean;
 }
-type Phase = "intro" | "visual-easy" | "visual-medium" | "ready-easy" | "playing-easy" | "ready-medium" | "playing-medium" | "results";
+type Phase = "intro" | "visual-easy" | "visual-medium" | "visual-hard" | "ready-easy" | "playing-easy" | "ready-medium" | "playing-medium" | "results";
+type VisualLevel = "easy" | "medium" | "hard";
 type Piece = { id: string; image: string; alt: string };
+type VisualStory = {
+  id: string;
+  level: VisualLevel;
+  title: string;
+  pieces: Piece[];
+  correctOrder: string[];
+};
 
 const easyWords = ["pato", "casa", "leite", "peixe", "pássaro", "blusa", "carro", "loja", "sofá", "cama", "calça", "porco", "bermuda", "raquete", "celular", "lápis", "panda", "pipoca", "pão", "relógio", "copo", "taça", "chave", "leite", "banana", "vaso", "cueca", "sabão", "pera", "flor", "pimenta", "forno", "pastel", "mamão", "jaula", "pipa", "panela", "pente", "porta", "escova", "saia", "lenço", "pai", "pessoa", "escola", "paciência", "escolha", "paixão", "luz", "paz"];
 const mediumWords = ["casa", "parque", "blusa", "carro", "loja", "sofá", "cama", "calça", "bermuda", "raquete", "celular", "lápis", "relógio", "copo", "taça", "chave", "leite", "banana", "vaso", "cueca", "sabão", "escova", "saia", "lenço", "mesa", "coração", "caderno"];
 const clothingWords = new Set(["blusa", "calça", "bermuda", "cueca", "saia", "lenço"]);
-const easyPieces: Piece[] = [
-  { id: "facil1", image: easyOne, alt: "Cena fácil 1" },
-  { id: "facil2", image: easyTwo, alt: "Cena fácil 2" },
-  { id: "facil3", image: easyThree, alt: "Cena fácil 3" },
+
+const shuffleArray = <T,>(items: T[]) => {
+  const next = [...items];
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+  }
+  return next;
+};
+
+const cartaOne = new URL("../assets/carta1.jpg", import.meta.url).href;
+const cartaTwo = new URL("../assets/carta2.jpg", import.meta.url).href;
+const cartaThree = new URL("../assets/carta3.jpg", import.meta.url).href;
+const idosaOne = new URL("../assets/Idosa1.jpg", import.meta.url).href;
+const idosaTwo = new URL("../assets/Idosa2.jpg", import.meta.url).href;
+const idosaThree = new URL("../assets/Idosa3.jpg", import.meta.url).href;
+const babyOne = new URL("../assets/Baby1.jpg", import.meta.url).href;
+const babyTwo = new URL("../assets/Baby2.jpg", import.meta.url).href;
+const babyThree = new URL("../assets/Baby3.jpg", import.meta.url).href;
+const cachorroOne = new URL("../assets/cachorro1.jpg", import.meta.url).href;
+const cachorroTwo = new URL("../assets/cachorro2.jpg", import.meta.url).href;
+const cachorroThree = new URL("../assets/cachorro3.jpg", import.meta.url).href;
+const cachorroFour = new URL("../assets/cachorro4.jpg", import.meta.url).href;
+const loucaOne = new URL("../assets/louça1.jpg", import.meta.url).href;
+const loucaTwo = new URL("../assets/louça2.jpg", import.meta.url).href;
+const loucaThree = new URL("../assets/louça3.jpg", import.meta.url).href;
+const loucaFour = new URL("../assets/louça4.jpg", import.meta.url).href;
+const paredeOne = new URL("../assets/parede1.jpg", import.meta.url).href;
+const paredeTwo = new URL("../assets/parede2.jpg", import.meta.url).href;
+const paredeThree = new URL("../assets/parede3.jpg", import.meta.url).href;
+const paredeFour = new URL("../assets/parede4.jpg", import.meta.url).href;
+const paredeFive = new URL("../assets/parede5.jpg", import.meta.url).href;
+
+const easyStories: VisualStory[] = [
+  {
+    id: "cartas",
+    level: "easy",
+    title: "Cartas",
+    correctOrder: ["carta1", "carta2", "carta3"],
+    pieces: [
+      { id: "carta1", image: cartaOne, alt: "Carta 1" },
+      { id: "carta2", image: cartaTwo, alt: "Carta 2" },
+      { id: "carta3", image: cartaThree, alt: "Carta 3" },
+    ],
+  },
+  {
+    id: "idosa",
+    level: "easy",
+    title: "Idosa",
+    correctOrder: ["idosa1", "idosa2", "idosa3"],
+    pieces: [
+      { id: "idosa1", image: idosaOne, alt: "Idosa 1" },
+      { id: "idosa2", image: idosaTwo, alt: "Idosa 2" },
+      { id: "idosa3", image: idosaThree, alt: "Idosa 3" },
+    ],
+  },
+  {
+    id: "baby",
+    level: "easy",
+    title: "Bebê",
+    correctOrder: ["baby1", "baby2", "baby3"],
+    pieces: [
+      { id: "baby1", image: babyOne, alt: "Baby 1" },
+      { id: "baby2", image: babyTwo, alt: "Baby 2" },
+      { id: "baby3", image: babyThree, alt: "Baby 3" },
+    ],
+  },
 ];
-const mediumPieces: Piece[] = [
-  { id: "principal1", image: principalOne, alt: "Carta principal 1" },
-  { id: "principal2", image: principalTwo, alt: "Carta principal 2" },
-  { id: "principal3", image: principalThree, alt: "Carta principal 3" },
-  { id: "principal4", image: principalFour, alt: "Carta principal 4" },
+
+const mediumStories: VisualStory[] = [
+  {
+    id: "cachorro",
+    level: "medium",
+    title: "Cachorro",
+    correctOrder: ["cachorro1", "cachorro2", "cachorro3", "cachorro4"],
+    pieces: [
+      { id: "cachorro1", image: cachorroOne, alt: "Cachorro 1" },
+      { id: "cachorro2", image: cachorroTwo, alt: "Cachorro 2" },
+      { id: "cachorro3", image: cachorroThree, alt: "Cachorro 3" },
+      { id: "cachorro4", image: cachorroFour, alt: "Cachorro 4" },
+    ],
+  },
+  {
+    id: "louca",
+    level: "medium",
+    title: "Louça",
+    correctOrder: ["louca1", "louca2", "louca3", "louca4"],
+    pieces: [
+      { id: "louca1", image: loucaOne, alt: "Louça 1" },
+      { id: "louca2", image: loucaTwo, alt: "Louça 2" },
+      { id: "louca3", image: loucaThree, alt: "Louça 3" },
+      { id: "louca4", image: loucaFour, alt: "Louça 4" },
+    ],
+  },
+];
+
+const hardStories: VisualStory[] = [
+  {
+    id: "parede",
+    level: "hard",
+    title: "Parede",
+    correctOrder: ["parede1", "parede2", "parede3", "parede4", "parede5"],
+    pieces: [
+      { id: "parede1", image: paredeOne, alt: "Parede 1" },
+      { id: "parede2", image: paredeTwo, alt: "Parede 2" },
+      { id: "parede3", image: paredeThree, alt: "Parede 3" },
+      { id: "parede4", image: paredeFour, alt: "Parede 4" },
+      { id: "parede5", image: paredeFive, alt: "Parede 5" },
+    ],
+  },
 ];
 
 function formatDuration(milliseconds: number) {
@@ -61,6 +162,7 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
   const [elapsed, setElapsed] = useState(0);
   const [reportMessage, setReportMessage] = useState("");
   const [isSharing, setIsSharing] = useState(false);
+  const [activeStory, setActiveStory] = useState<VisualStory | null>(null);
   const startTime = useRef<number | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const wordIndexRef = useRef(0);
@@ -74,9 +176,29 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
     [currentLevel],
   );
   const totalCorrectWords = easyWords.filter((word) => word.startsWith("p")).length + clothingWords.size;
-  const currentPieces = phase === "visual-easy" ? easyPieces : mediumPieces;
-  const slotCount = phase === "visual-easy" ? 3 : 4;
+  const currentPieces = activeStory?.pieces ?? [];
+  const slotCount = activeStory ? activeStory.pieces.length : 0;
   const audioSource = currentLevel === "easy" ? easyAudio : mediumAudio;
+
+  const beginVisualLevel = useCallback((level: VisualLevel) => {
+    const stories = level === "easy" ? easyStories : level === "medium" ? mediumStories : hardStories;
+    const nextStory = stories[Math.floor(Math.random() * stories.length)];
+    setActiveStory({
+      ...nextStory,
+      pieces: shuffleArray(nextStory.pieces),
+      correctOrder: [...nextStory.correctOrder],
+    });
+    setPlacements({});
+    setSelectedPiece(null);
+    setMessage("");
+    setMessageIsError(false);
+  }, []);
+
+  useEffect(() => {
+    if (phase === "visual-easy") beginVisualLevel("easy");
+    if (phase === "visual-medium") beginVisualLevel("medium");
+    if (phase === "visual-hard") beginVisualLevel("hard");
+  }, [beginVisualLevel, phase]);
 
   useEffect(() => {
     if (!startTime.current || phase === "results" || phase === "intro") return;
@@ -94,6 +216,9 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
     startTime.current = Date.now();
     setElapsed(0);
     setPhase(visualLevels ? "visual-easy" : "ready-easy");
+    setActiveStory(null);
+    setPlacements({});
+    setSelectedPiece(null);
   };
 
   const placePiece = (slot: number, pieceId = selectedPiece) => {
@@ -116,9 +241,11 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
   };
 
   const validateVisualLevel = () => {
+    const story = activeStory;
+    if (!story) return;
+
     setAttempts((count) => count + 1);
-    const correct = Array.from({ length: slotCount }, (_, index) => index + 1)
-      .every((slot) => placements[slot] === `${phase === "visual-easy" ? "facil" : "principal"}${slot}`);
+    const correct = story.correctOrder.every((pieceId, index) => placements[index + 1] === pieceId);
     if (!correct) {
       setMessage(`Organize as ${slotCount} imagens na ordem correta para continuar.`);
       setMessageIsError(true);
@@ -131,8 +258,10 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
 
   const continueVisualLevel = () => {
     setPlacements({});
+    setSelectedPiece(null);
     setMessage("");
     if (phase === "visual-easy") setPhase("visual-medium");
+    else if (phase === "visual-medium") setPhase("visual-hard");
     else setPhase("results");
   };
 
@@ -205,7 +334,7 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
     duration: formatDuration(elapsed),
     details: visualLevels
       ? [
-          ["Níveis concluídos", `${completedVisualLevels.size} de 2`],
+          ["Níveis concluídos", `${completedVisualLevels.size} de 3`],
           ["Tentativas de organização", String(attempts)],
           ["Tempo total", formatDuration(elapsed)],
         ]
@@ -238,6 +367,7 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
     setMessage("");
     setReportMessage("");
     setSelectedPiece(null);
+    setActiveStory(null);
   };
 
   const handleAudioKeyDown = (event: ReactKeyboardEvent<HTMLAudioElement>) => {
@@ -260,12 +390,16 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
             <h1>{testName === "TOHE" ? "Teste TOHE" : "AATS"}</h1>
             <p className={styles.lead}>
               {visualLevels
-                ? "Organize as cenas em sequência nos níveis fácil e médio."
+                ? "Organize as cenas em sequência nos níveis fácil, médio e difícil."
                 : "Ouça as palavras com atenção e responda à regra de cada nível. O teste contém uma etapa fácil e uma etapa média."}
             </p>
             <div className={styles.levelSummary}>
               {visualLevels ? (
-                <span>Níveis fácil e médio: organização visual</span>
+                <>
+                  <span>Fácil: cartas, idosa ou bebê</span>
+                  <span>Médio: cachorro ou louça</span>
+                  <span>Difícil: parede</span>
+                </>
               ) : (
                 <>
                   <span>Fácil: palavras iniciadas com P</span>
@@ -277,11 +411,11 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
           </div>
         )}
 
-        {(phase === "visual-easy" || phase === "visual-medium") && (
+        {(phase === "visual-easy" || phase === "visual-medium" || phase === "visual-hard") && activeStory && (
           <div className={`${styles.panel} ${styles.visualPanel}`}>
-            <span className={styles.kicker}>{phase === "visual-easy" ? "Nível fácil" : "Nível médio"}</span>
+            <span className={styles.kicker}>{phase === "visual-easy" ? "Nível fácil" : phase === "visual-medium" ? "Nível médio" : "Nível difícil"}</span>
             <h1>Organize a sequência</h1>
-            <p className={styles.lead}>Arraste uma imagem para cada posição ou selecione a imagem e depois a posição.</p>
+            <p className={styles.lead}>História: {activeStory.title}. Arraste uma imagem para cada posição ou selecione a imagem e depois a posição.</p>
             <div className={styles.slots}>
               {Array.from({ length: slotCount }, (_, index) => {
                 const slot = index + 1;
@@ -353,7 +487,7 @@ export default function TesteAtencao({ testName, visualLevels = false }: TesteAt
             <dl className={styles.results}>
               {visualLevels ? (
                 <>
-                  <div><dt>Níveis concluídos</dt><dd>{completedVisualLevels.size} <span>/ 2 níveis</span></dd></div>
+                  <div><dt>Níveis concluídos</dt><dd>{completedVisualLevels.size} <span>/ 3 níveis</span></dd></div>
                   <div><dt>Tentativas de organização</dt><dd>{attempts}</dd></div>
                   <div><dt>Tempo total</dt><dd>{formatDuration(elapsed)}</dd></div>
                 </>

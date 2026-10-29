@@ -63,6 +63,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = useCallback(async () => {
     if (auth) await signOut(auth);
     localStorage.removeItem(USER_NAME_KEY);
+    localStorage.removeItem(WELCOME_COMPLETED_KEY);
     setAuthError(null);
   }, []);
 
